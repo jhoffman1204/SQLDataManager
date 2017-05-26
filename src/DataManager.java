@@ -1,55 +1,70 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import javafx.scene.chart.PieChart;
+
+import java.sql.*;
 import java.util.Calendar;
 
 /**
  * Created by James on 5/25/2017.
  */
-public class DataManager {
+public abstract class DataManager {
 
-    private String currentDatabaseConnectionURL = "jdbc:mysql://localhost/integrateJava?" +
-            "verifyServerCertificate=false&user=root&password=hoffman96&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false";
+    private String currentDatabaseConnectionURL = "";
     private String localHostConnectionURL = "jdbc:mysql://localhost/CodeDash?" +
             "verifyServerCertificate=false&user=root&password=hoffman96&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false";
     private String onlineDataBaseConnectionURL = "jdbc:mysql://77.104.151.241/stonybr8_test?" +
              "user=stonybr8_james&password=hoffman96&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     private Connection conn = null;
-    public void init(){
-        connectToDataBase(localHostConnectionURL);
+    private String currentlySelectedTable = "";
+
+    /**
+     * Child classes implementation works as follows:
+     * UserDataManager takes a user object and adds that to the users database
+     * ClassParticipationManager takes in a classParticipation object and adds that to the database
+     *
+     * @param obj
+     */
+    public abstract void addData(Object obj);
+    public abstract User retrieveData(String key);
+    /**
+     * This method will only be called by child class of DataManager. The initialization will set the table to the class that it was initialized by.
+     * The current database that is being connected to is decided by the developer
+     * Calls the connectToDataBase() method
+     * @param table: the table that is currently being manipulated
+     * @return: a Connection that a child class will use
+     */
+    public Connection init(String table){
+        this.currentDatabaseConnectionURL = localHostConnectionURL;
+        this.currentlySelectedTable = table;
+        return connectToDataBase(this.currentDatabaseConnectionURL);
     }
-    public void connectToDataBase(String connectionURL){
+    public Connection connectToDataBase(String connectionURL){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
             this.conn = DriverManager.getConnection(connectionURL);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return this.conn;
     }
-    public void addUser(String firstName, String lastName, String username, String password, String major, String year, String git, String website, String courses, String email) {
-        // create a sql date object so we can use it in our INSERT statement
-        Calendar calendar = Calendar.getInstance();
-        java.sql.Date startDate = new java.sql.Date(calendar.getTime().getTime());
-
-        // the mysql insert statement
-        String query = " insert into users (first_name, last_name, username, password, major, year, git, website,courses,email)"
-                + " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        // create the mysql insert preparedstatement
+    public void closeConnection() {
         try {
-            PreparedStatement preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setString(1, firstName);
-            preparedStmt.setString(2, lastName);
-            preparedStmt.setString(3, username);
-            preparedStmt.setString(4, password);
-            preparedStmt.setString(5, major);
-            preparedStmt.setString(6, year);
-            preparedStmt.setString(7, git);
-            preparedStmt.setString(8, website);
-            preparedStmt.setString(9, courses);
-            preparedStmt.setString(10, email);
-
-            preparedStmt.execute();
+            this.conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void displayAllUsersInDatabase(int columns){
+        try{
+            Statement st = conn.createStatement();
+            String sql = ("SELECT * FROM " + currentlySelectedTable + ";");
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()) {
+                for(int i = 1; i < (columns+1); i++){
+                    System.out.print(rs.getString(i));
+                    System.out.print(" : ");
+                }
+                System.out.println("");
+            }
         }
         catch(Exception e){
             e.printStackTrace();
