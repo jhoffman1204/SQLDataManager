@@ -13,6 +13,7 @@ public class WriteDataManager {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
             //Connection conn = DriverManager.getConnection("jdbc:mysql://77.104.151.241/stonybr8_test?" +
             //"user=stonybr8_james&password=hoffman96&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
+
             // this also does not give me an error
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/integrateJava?" +
                     "verifyServerCertificate=false&user=root&password=hoffman96&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false");
@@ -54,5 +55,48 @@ public class WriteDataManager {
         int score = in.nextInt();
         System.out.println("User Created");
         this.InsertUserIntoUsersTable(firstName,lastName,isAdmin,score);
+    }
+    public void deleteData(){
+        try {
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/integrateJava?" +
+                    "verifyServerCertificate=false&user=root&password=hoffman96&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false");
+                String query = "delete from users where first_name = 'james';";
+                PreparedStatement preparedStmt = conn.prepareStatement(query);
+                preparedStmt.execute();
+                conn.close();
+        }
+        catch(Exception e){
+
+        }
+    }
+    public void simpleQuery(){
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:mysql://77.104.151.241/stonybr8_test?" +
+                    "user=stonybr8_james&password=hoffman96&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
+//            String query = ("CREATE TABLE student(" +
+//                    "first_name VARCHAR(30) NOT NULL," +
+//                    "last_name VARCHAR(30) NOT NULL," +
+//                    "email VARCHAR(60) NULL," +
+//                    "street VARCHAR(50) NOT NULL," +
+//                    "city VARCHAR(40) NOT NULL," +
+//                    "state CHAR(2) NOT NULL DEFAULT \"PA\"," +
+//                    "zip MEDIUMINT UNSIGNED NOT NULL," +
+//                    "phone VARCHAR(20) NOT NULL," +
+//                    "birth_date DATE NOT NULL," +
+//                    "sex ENUM('M', 'F') NOT NULL," +
+//                    "date_entered TIMESTAMP," +
+//                    "lunch_cost FLOAT NULL," +
+//                    "student_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY\n" +
+//                    ");");
+            String query = "INSERT INTO student VALUES('Dale', 'Cooper', 'dcooper@aol.com', " +
+                    "\t'123 Main St', 'Yakima', 'WA', 98901, '792-223-8901', \"1959-2-22\"," +
+                    "\t'M', NOW(), 3.50, NULL);";
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
+            preparedStmt.execute();
+            conn.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }

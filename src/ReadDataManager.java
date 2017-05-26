@@ -14,8 +14,12 @@ public class ReadDataManager {
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/integrateJava?" +
                     "verifyServerCertificate=false&user=root&password=hoffman96&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false");
 
+            //Connection conn = DriverManager.getConnection("jdbc:mysql://77.104.151.241/stonybr8_test?" +
+            //       "user=stonybr8_james&password=hoffman96&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
+
+
             Statement st = conn.createStatement();
-            String sql = ("SELECT * FROM users;");
+            String sql = ("SELECT * FROM student;");
             ResultSet rs = st.executeQuery(sql);
             while(rs.next()) {
                 for(int i = 1; i < 7; i++){
@@ -26,7 +30,7 @@ public class ReadDataManager {
             }
         }
         catch(Exception e){
-
+            e.printStackTrace();
         }
 
     }
