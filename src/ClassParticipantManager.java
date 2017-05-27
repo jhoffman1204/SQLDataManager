@@ -1,6 +1,5 @@
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.util.Calendar;
 
 /**
  * Created by James on 5/26/2017.
@@ -25,7 +24,7 @@ public class ClassParticipantManager extends DataManager {
     @Override
     public void addData(Object obj) {
         // Creates a class participation object
-        ClassParticipation cp = (ClassParticipation)obj;
+        ClassParticipant cp = (ClassParticipant)obj;
         String query = " insert into classparticipants (class_name, username, major, year)"
                 + " values (?, ?, ?, ?)";
         try {

@@ -1,19 +1,19 @@
 /**
  * Created by James on 5/26/2017.
  */
-public class ClassParticipation {
+public class ClassParticipant {
     private String className;
     private String username;
     private String major;
     private String year;
 
     /**
-     * for generic ClassParticipation objects
+     * for generic ClassParticipant objects
      */
-    public ClassParticipation(){
+    public ClassParticipant(){
 
     }
-    public ClassParticipation(String className, String username, String major, String year){
+    public ClassParticipant(String className, String username, String major, String year){
         this.className = className;
         this.username = username;
         this.major = major;
