@@ -76,13 +76,13 @@ public class UserDataManager extends DataManager {
                     user.setCourses(rs.getString(9));
                     user.setStudentID(Integer.parseInt(rs.getString(10)));
                     user.setEmail(rs.getString(11));
+                    return user;
                 }
             }
-            System.out.println("User " + user.getUsername() + " retrieved");
         }
         catch(Exception e){
             e.printStackTrace();
         }
-        return user;
+        return null;
     }
 }

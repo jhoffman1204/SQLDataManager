@@ -24,6 +24,7 @@ public class GUIManager extends Application {
     StackPane root;
     // sets the main focus pane to be generic so that it is easy to remove and swap for other
     Pane currenBodyPane;
+    Label successLabel;
 
     public static void main(String[] args) {
         launch(args);
@@ -38,10 +39,6 @@ public class GUIManager extends Application {
 
         primaryStage.setScene(new Scene(root, 1200, 800));
         primaryStage.show();
-
-        controller.login("dcooper123","test");
-        controller.login("ddoesntexist123","test");
-        controller.login("james.a.hoffman@stonybrook.edu","test");
     }
     public void init(){
         controller.init();
@@ -96,7 +93,24 @@ public class GUIManager extends Application {
 
         Button loginSubmit = new Button("Login");
         loginSubmit.setOnAction(event -> {
-            controller.login(usernameOrEmail.getText(),password.getText());
+            if(controller.login(usernameOrEmail.getText(),password.getText()) == true){
+                if(successLabel != null) {
+                    successLabel.setText("");
+                }
+                successLabel = new Label("You have SuccessFully Logged In");
+                loginForm.add(successLabel,0,3);
+                loginForm.setMargin(successLabel,new Insets(15,0,0,0));
+                usernameOrEmail.clear();
+                password.clear();
+            }
+            else{
+                if(successLabel != null) {
+                    successLabel.setText("");
+                }
+                successLabel = new Label("Incorrect Username/Password");
+                loginForm.add(successLabel,0,3);
+                loginForm.setMargin(successLabel,new Insets(15,0,0,0));
+            }
         });
 
         loginForm.add(loginSubmit,0,2);
