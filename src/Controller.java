@@ -52,4 +52,14 @@ public class Controller {
     public void setState(String state){
         fsm.setState(state);
     }
+    public void login(String usernameOrEmail, String password){
+        /**
+         * 1. check what is entered to every username and email that is in the database, O(2n) Operation
+         * 2. check to see if the password matches the password in the field
+         * 3. retrieve all user data and convert to an object that will serve as the current user object
+         */
+        userManager.init();
+        userManager.retrieveData(usernameOrEmail);
+        userManager.closeConnection();
+    }
 }

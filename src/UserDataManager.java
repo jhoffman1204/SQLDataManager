@@ -64,7 +64,7 @@ public class UserDataManager extends DataManager {
             String sql = ("SELECT * FROM users;");
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-                if(username.equalsIgnoreCase(rs.getString(3))) {
+                if(username.equalsIgnoreCase(rs.getString(3)) || username.equalsIgnoreCase(rs.getString(11))) {
                     user.setFirstName(rs.getString(1));
                     user.setLastName(rs.getString(2));
                     user.setUsername(rs.getString(3));

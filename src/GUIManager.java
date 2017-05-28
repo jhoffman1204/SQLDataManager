@@ -2,6 +2,7 @@
  * Created by James on 5/26/2017.
  */
 import com.sun.org.apache.xml.internal.security.algorithms.implementations.IntegrityHmac;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -10,10 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import static javafx.application.Application.launch;
@@ -23,7 +21,9 @@ public class GUIManager extends Application {
 
     private String state;
     Controller controller = new Controller();
-
+    StackPane root;
+    // sets the main focus pane to be generic so that it is easy to remove and swap for other
+    Pane currenBodyPane;
 
     public static void main(String[] args) {
         launch(args);
@@ -33,15 +33,15 @@ public class GUIManager extends Application {
         this.init();
         primaryStage.setTitle("Code Dash");
 
-        StackPane root = new StackPane();
+        root = new StackPane();
         root.getChildren().add(this.createMenuBar());
-
-        GridPane signupForm = this.addCreateNewClassForm();
-        root.getChildren().add(signupForm);
-        root.setMargin(signupForm,new Insets(210,0,0,400));
 
         primaryStage.setScene(new Scene(root, 1200, 800));
         primaryStage.show();
+
+        controller.login("dcooper123","test");
+        controller.login("ddoesntexist123","test");
+        controller.login("james.a.hoffman@stonybrook.edu","test");
     }
     public void init(){
         controller.init();
@@ -51,22 +51,58 @@ public class GUIManager extends Application {
 
         Button createProfileClass = new Button("Create Profile");
         createProfileClass.setOnAction(event -> {
-            controller.setState(FiniteStateMachine.ADD_USER_STATE);
-            System.out.println("In the Create Profile State");
+            setAsBodyPane(this.createSignUpForm());
         });
         menuBar.getChildren().add(createProfileClass);
 
         Button addClassButton = new Button("Create Class");
         addClassButton.setOnAction(event -> {
-            controller.setState(FiniteStateMachine.ADD_CLASS_STATE);
-            System.out.println("In the create class state");
+            setAsBodyPane(this.addCreateNewClassForm());
         });
         menuBar.getChildren().add(addClassButton);
 
+        Button loginButton = new Button("Login");
+        loginButton.setOnAction(event -> {
+            setAsBodyPane(this.createLoginForm());
+        });
+        menuBar.getChildren().add(loginButton);
 
         return menuBar;
     }
+    public void setAsBodyPane(Pane pane){
+        root.getChildren().remove(currenBodyPane);
+        root.getChildren().add(pane);
+        root.setMargin(pane, new Insets(210,0,0,400));
+        currenBodyPane = pane;
+    }
+    public GridPane createLoginForm(){
+        GridPane loginForm = new GridPane();
 
+        TextField usernameOrEmail = new TextField();
+        TextField password = new TextField();
+
+        Label usernameOrEmailLabel = new Label("Username/Email:    ");
+        Label passwordLabel = new Label("Password: ");
+
+        loginForm.add(usernameOrEmailLabel,0,0);
+        loginForm.add(passwordLabel,0,1);
+        loginForm.add(usernameOrEmail,1,0);
+        loginForm.add(password,1,1);
+
+        loginForm.setMargin(usernameOrEmailLabel , new Insets(0,0,15,0));
+        loginForm.setMargin(passwordLabel        , new Insets(0,0,15,0));
+        loginForm.setMargin(usernameOrEmail      , new Insets(0,0,15,0));
+        loginForm.setMargin(password             , new Insets(0,0,15,0));
+
+        Button loginSubmit = new Button("Login");
+        loginSubmit.setOnAction(event -> {
+            controller.login(usernameOrEmail.getText(),password.getText());
+        });
+
+        loginForm.add(loginSubmit,0,2);
+
+        return loginForm;
+    }
     public GridPane createSignUpForm(){
         GridPane signupForm = new GridPane();
 
@@ -201,6 +237,21 @@ public class GUIManager extends Application {
         createNewClassForm.add(semester,1,3);
         createNewClassForm.add(prerequisites,1,4);
         createNewClassForm.add(admins,1,5);
+
+        //
+        createNewClassForm.setMargin(classNameLabel    ,new Insets(0,0,15,0));
+        createNewClassForm.setMargin(descriptionLabel  ,new Insets(0,0,15,0));
+        createNewClassForm.setMargin(professorLabel    ,new Insets(0,0,15,0));
+        createNewClassForm.setMargin(semesterLabel     ,new Insets(0,0,15,0));
+        createNewClassForm.setMargin(prerequisitesLabel,new Insets(0,0,15,0));
+        createNewClassForm.setMargin(adminsLabel       ,new Insets(0,0,15,0));
+
+        createNewClassForm.setMargin(className    ,new Insets(0,0,15,0));
+        createNewClassForm.setMargin(description  ,new Insets(0,0,15,0));
+        createNewClassForm.setMargin(professor    ,new Insets(0,0,15,0));
+        createNewClassForm.setMargin(semester     ,new Insets(0,0,15,0));
+        createNewClassForm.setMargin(prerequisites,new Insets(0,0,15,0));
+        createNewClassForm.setMargin(admins       ,new Insets(0,0,15,0));
 
         Button submitNewUser = new Button();
         submitNewUser.setText("Submit");
