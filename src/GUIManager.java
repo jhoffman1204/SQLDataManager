@@ -1,6 +1,7 @@
 /**
  * Created by James on 5/26/2017.
  */
+import com.sun.org.apache.xml.internal.security.algorithms.implementations.IntegrityHmac;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -10,7 +11,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import static javafx.application.Application.launch;
@@ -31,8 +34,9 @@ public class GUIManager extends Application {
         primaryStage.setTitle("Code Dash");
 
         StackPane root = new StackPane();
+        root.getChildren().add(this.createMenuBar());
 
-        GridPane signupForm = this.addToSignUpForm();
+        GridPane signupForm = this.addCreateNewClassForm();
         root.getChildren().add(signupForm);
         root.setMargin(signupForm,new Insets(210,0,0,400));
 
@@ -42,7 +46,28 @@ public class GUIManager extends Application {
     public void init(){
         controller.init();
     }
-    public GridPane addToSignUpForm(){
+    public HBox createMenuBar(){
+        HBox menuBar = new HBox();
+
+        Button createProfileClass = new Button("Create Profile");
+        createProfileClass.setOnAction(event -> {
+            controller.setState(FiniteStateMachine.ADD_USER_STATE);
+            System.out.println("In the Create Profile State");
+        });
+        menuBar.getChildren().add(createProfileClass);
+
+        Button addClassButton = new Button("Create Class");
+        addClassButton.setOnAction(event -> {
+            controller.setState(FiniteStateMachine.ADD_CLASS_STATE);
+            System.out.println("In the create class state");
+        });
+        menuBar.getChildren().add(addClassButton);
+
+
+        return menuBar;
+    }
+
+    public GridPane createSignUpForm(){
         GridPane signupForm = new GridPane();
 
         TextField firstNameTextField = new TextField();
@@ -128,11 +153,77 @@ public class GUIManager extends Application {
                         coursesTextField.getText(),
                         emailTextField.getText());
                 controller.addUser(user);
+                firstNameTextField.clear();
+                lastNameTextField.clear();
+                passwordTextField.clear();
+                majorTextField.clear();
+                yearTextField.clear();
+                gitTextField.clear();
+                websiteTextField.clear();
+                coursesTextField.clear();
+                emailTextField.clear();
             }
         });
         signupForm.add(submitNewUser    ,0,10);
 
 
         return signupForm;
+    }
+    public GridPane addCreateNewClassForm(){
+        GridPane createNewClassForm = new GridPane();
+
+        TextField className = new TextField();
+        TextField description = new TextField();
+        TextField professor = new TextField();
+        TextField semester = new TextField();
+        TextField prerequisites = new TextField();
+        TextField admins = new TextField();
+
+        Label classNameLabel = new Label     ("Class Name:       ");
+        Label descriptionLabel = new Label   ("Description:        ");
+        Label professorLabel = new Label     ("Professor:         ");
+        Label semesterLabel = new Label      ("Semester:         ");
+        Label prerequisitesLabel = new Label ("Prerequisuites:            ");
+        Label adminsLabel = new Label        ("Admins: ");
+
+        // add the labels to the sign up form
+        createNewClassForm.add(classNameLabel,0,0);
+        createNewClassForm.add(descriptionLabel,0,1);
+        createNewClassForm.add(professorLabel,0,2);
+        createNewClassForm.add(semesterLabel,0,3);
+        createNewClassForm.add(prerequisitesLabel,0,4);
+        createNewClassForm.add(adminsLabel,0,5);
+
+        // add text fields to the form
+        createNewClassForm.add(className,1,0);
+        createNewClassForm.add(description,1,1);
+        createNewClassForm.add(professor,1,2);
+        createNewClassForm.add(semester,1,3);
+        createNewClassForm.add(prerequisites,1,4);
+        createNewClassForm.add(admins,1,5);
+
+        Button submitNewUser = new Button();
+        submitNewUser.setText("Submit");
+        submitNewUser.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ClassInformation ci = new ClassInformation(className.getText(),
+                        description.getText(),
+                        professor.getText(),
+                        semester.getText(),
+                        prerequisites.getText(),
+                        admins.getText());
+                controller.addClass(ci);
+                className.clear();
+                description.clear();
+                professor.clear();
+                semester.clear();
+                prerequisites.clear();
+                admins.clear();
+            }
+        });
+        createNewClassForm.add(submitNewUser    ,0,10);
+
+        return createNewClassForm;
     }
 }

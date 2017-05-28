@@ -3,10 +3,10 @@
  */
 public class Controller {
 
-    UserDataManager manager;
+    UserDataManager userManager;
     ClassParticipantManager classParticipantManager;
     ClassInformationManager classInformationManager;
-
+    FiniteStateMachine fsm;
     public static void main(String argsp[]){
 
 
@@ -22,10 +22,16 @@ public class Controller {
 
 
     }
+
+    /**
+     * This class is initialized by the GUIManager and the main instance will be accessed from there
+     */
     public void init(){
-        manager = new UserDataManager();
+        userManager = new UserDataManager();
         classParticipantManager = new ClassParticipantManager();
         classInformationManager = new ClassInformationManager();
+        fsm = new FiniteStateMachine();
+        fsm.init();
     }
     public void addUserToClassInformation(){
         classInformationManager.init();
@@ -34,8 +40,16 @@ public class Controller {
         classInformationManager.closeConnection();
     }
     public void addUser(User user){
-        manager.init();
-        manager.addData(user);
-        manager.closeConnection();
+        userManager.init();
+        userManager.addData(user);
+        userManager.closeConnection();
+    }
+    public void addClass(ClassInformation classInformation){
+        classInformationManager.init();
+        classInformationManager.addData(classInformation);
+        classInformationManager.closeConnection();
+    }
+    public void setState(String state){
+        fsm.setState(state);
     }
 }
