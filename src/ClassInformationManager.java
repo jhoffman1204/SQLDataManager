@@ -1,6 +1,4 @@
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * Created by James on 5/26/2017.
@@ -44,7 +42,26 @@ public class ClassInformationManager extends DataManager {
     }
 
     @Override
-    public User retrieveData(String username) {
+    public ClassInformation retrieveData(String username) {
+        ClassInformation temp = new ClassInformation();
+        try {
+            Statement st = conn.createStatement();
+            String sql = ("SELECT * FROM classinformation;");
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                if(username.equalsIgnoreCase(rs.getString(1))) {
+                    temp.setClass_name(rs.getString(1));
+                    temp.setDescription(rs.getString(2));
+                    temp.setProfessor(rs.getString(3));
+                    temp.setSemester(rs.getString(4));
+                    temp.setPrerequisites(rs.getString(5));
+                    return temp;
+                }
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
         return null;
     }
 }

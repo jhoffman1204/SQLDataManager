@@ -8,10 +8,6 @@ public class Controller {
     ClassInformationManager classInformationManager;
     FiniteStateMachine fsm;
     User currentUser;
-    public static void main(String argsp[]){
-
-    }
-
     /**
      * This class is initialized by the GUIManager and the main instance will be accessed from there
      */
@@ -41,13 +37,6 @@ public class Controller {
     }
 
     /**
-     * Changes the setState of the Finite State Machine
-     * @param state
-     */
-    public void setState(String state){
-        fsm.setState(state);
-    }
-    /**
      * sets the current user to the one corresponding to the username entered if both exist are are correct
      * @param usernameOrEmail: either going to be a username or an email entered
      * @param password: the password that the user thinks is the correct one
@@ -70,6 +59,7 @@ public class Controller {
             return false;
         }
     }
+
     public User searchForUser(String username){
         userManager.init();
         User temp = userManager.retrieveData(username);
@@ -85,11 +75,31 @@ public class Controller {
     public void logout(){
         this.currentUser = null;
     }
+    public ClassInformation searchForClass(String className){
+        classInformationManager.init();
+        ClassInformation temp = classInformationManager.retrieveData(className);
+        if(temp == null){
+            classInformationManager.closeConnection();
+            return null;
+        }
+        else{
+            classInformationManager.closeConnection();
+            return temp;
+        }
+    }
+
+    /**
+     * Getter and Setter methods
+     */
 
     public FiniteStateMachine getFsm(){
         return this.fsm;
     }
     public User getCurrentUser(){
         return this.currentUser;
+    }
+    public void setState(String state)
+    {
+        fsm.setState(state);
     }
 }

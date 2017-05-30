@@ -53,10 +53,11 @@ public class GUIManager extends Application {
 
     /**
      * The state manager controls which buttons need to be visible
-     * 1. Create Profile Button
-     * 2. Create Class Button
-     * 3. Login Button
-     * 4. Logout Button
+     * 0. Create Profile Button
+     * 1. Create Class Button
+     * 2. Login Button
+     * 3. Logout Button
+     * 4. Search Bar
      * @return
      */
     public void initializeMenuBar(){
@@ -87,6 +88,10 @@ public class GUIManager extends Application {
 
         menuButtons[4] = createSearchBar();
     }
+
+    /**
+     * Clears the menu and determines which buttons to display based on the current state
+     */
     public void updateMenuBarState(){
         menuBar.getChildren().clear();
         String state = controller.getFsm().getCurrentState();
@@ -96,12 +101,23 @@ public class GUIManager extends Application {
             }
         }
     }
+
+    /**
+     * Clears the current body pane and adds the new parameter pane
+     * @param pane: Generic Pane so it can be a HBox, GridPane etc.
+     */
     public void setAsBodyPane(Pane pane){
         root.getChildren().remove(currenBodyPane);
         root.getChildren().add(pane);
         root.setMargin(pane, new Insets(210,0,0,400));
         currenBodyPane = pane;
     }
+
+    /**
+     * Creates a Textfield that allows one to search for a user
+     *   - calls the controller's method to search for a user
+     * @return: The HBox that will contain the search box and search button
+     */
     public HBox createSearchBar(){
         HBox searchBar = new HBox();
 
@@ -113,6 +129,10 @@ public class GUIManager extends Application {
             User temp = controller.searchForUser(searchField.getText());
             if(temp != null){
                 setAsBodyPane(createUserPage(temp));
+            }
+            ClassInformation classInformation = controller.searchForClass(searchField.getText());
+            if(classInformation != null){
+                setAsBodyPane(createClassPage(classInformation));
             }
         });
         return searchBar;
@@ -131,7 +151,7 @@ public class GUIManager extends Application {
         GridPane userPage = new GridPane();
 
         Label userNameLabel = new Label("UserName: " + user.getUsername());
-        Label majorLabel  = new Label("major: " + user.getMajor());
+        Label majorLabel  = new Label("Major: " + user.getMajor());
         Label yearLabel = new Label("Year: " + user.getYear());
         Label gitLabel = new Label("Git: " + user.getGit());
         Label website = new Label("Website: " + user.getWebsite());
@@ -146,9 +166,26 @@ public class GUIManager extends Application {
         userPage.add(courses       ,0,5);
         userPage.add(email         ,0,6);
 
-
-
         return userPage;
+    }
+    public GridPane createClassPage(ClassInformation classInformation){
+        GridPane classPage = new GridPane();
+
+        Label classNameLabel = new Label("ClassName: " + classInformation.getClass_name());
+        Label descriptionLabel = new Label("Description: " + classInformation.getDescription());
+        Label professorLabel = new Label("Professor: " + classInformation.getProfessor());
+        Label semesterLabel = new Label("Semester: " + classInformation.getSemester());
+        Label prerequisitesLabel = new Label("Prerequisites: " + classInformation.getPrerequisites());
+        Label adminsLabel = new Label("Admins: " + classInformation.getAdmins());
+
+        classPage.add(classNameLabel,0,0);
+        classPage.add(descriptionLabel,0,1);
+        classPage.add(professorLabel,0,2);
+        classPage.add(semesterLabel,0,3);
+        classPage.add(prerequisitesLabel,0,4);
+        classPage.add(adminsLabel,0,5);
+
+        return classPage;
     }
     public GridPane createLoginForm(){
         GridPane loginForm = new GridPane();

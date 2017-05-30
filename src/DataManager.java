@@ -24,7 +24,7 @@ public abstract class DataManager {
      * @param obj
      */
     public abstract void addData(Object obj);
-    public abstract User retrieveData(String key);
+    public abstract Object retrieveData(String key);
     /**
      * This method will only be called by child class of DataManager. The initialization will set the table to the class that it was initialized by.
      * The current database that is being connected to is decided by the developer
