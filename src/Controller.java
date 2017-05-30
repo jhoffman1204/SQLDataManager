@@ -9,7 +9,7 @@ public class Controller {
     FiniteStateMachine fsm;
     User currentUser;
     public static void main(String argsp[]){
-        
+
     }
 
     /**
@@ -32,21 +32,28 @@ public class Controller {
         userManager.init();
         userManager.addData(user);
         userManager.closeConnection();
+        this.currentUser = user;
     }
     public void addClass(ClassInformation classInformation){
         classInformationManager.init();
         classInformationManager.addData(classInformation);
         classInformationManager.closeConnection();
     }
+
+    /**
+     * Changes the setState of the Finite State Machine
+     * @param state
+     */
     public void setState(String state){
         fsm.setState(state);
     }
+    /**
+     * sets the current user to the one corresponding to the username entered if both exist are are correct
+     * @param usernameOrEmail: either going to be a username or an email entered
+     * @param password: the password that the user thinks is the correct one
+     * @return : returns true if the username and password exist and false if it does not
+     */
     public boolean login(String usernameOrEmail, String password){
-        /**
-         * 1. check what is entered to every username and email that is in the database, O(2n) Operation
-         * 2. check to see if the password matches the password in the field
-         * 3. retrieve all user data and convert to an object that will serve as the current user object
-         */
         userManager.init();
         User temp = userManager.retrieveData(usernameOrEmail);
         if(temp == null){
@@ -62,5 +69,27 @@ public class Controller {
         else {
             return false;
         }
+    }
+    public User searchForUser(String username){
+        userManager.init();
+        User temp = userManager.retrieveData(username);
+        if(temp == null){
+            userManager.closeConnection();
+            return null;
+        }
+        else {
+            userManager.closeConnection();
+            return temp;
+        }
+    }
+    public void logout(){
+        this.currentUser = null;
+    }
+
+    public FiniteStateMachine getFsm(){
+        return this.fsm;
+    }
+    public User getCurrentUser(){
+        return this.currentUser;
     }
 }

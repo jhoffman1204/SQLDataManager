@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -24,7 +25,9 @@ public class GUIManager extends Application {
     StackPane root;
     // sets the main focus pane to be generic so that it is easy to remove and swap for other
     Pane currenBodyPane;
+    HBox menuBar;
     Label successLabel;
+    Node[] menuButtons = new Node[5];
 
     public static void main(String[] args) {
         launch(args);
@@ -35,7 +38,11 @@ public class GUIManager extends Application {
         primaryStage.setTitle("Code Dash");
 
         root = new StackPane();
-        root.getChildren().add(this.createMenuBar());
+        menuBar = new HBox();
+        this.initializeMenuBar();
+        root.getChildren().add(menuBar);
+        controller.getFsm().setState(FiniteStateMachine.LOGGED_OUT_STATE);
+        this.updateMenuBarState();
 
         primaryStage.setScene(new Scene(root, 1200, 800));
         primaryStage.show();
@@ -43,34 +50,105 @@ public class GUIManager extends Application {
     public void init(){
         controller.init();
     }
-    public HBox createMenuBar(){
-        HBox menuBar = new HBox();
 
-        Button createProfileClass = new Button("Create Profile");
-        createProfileClass.setOnAction(event -> {
+    /**
+     * The state manager controls which buttons need to be visible
+     * 1. Create Profile Button
+     * 2. Create Class Button
+     * 3. Login Button
+     * 4. Logout Button
+     * @return
+     */
+    public void initializeMenuBar(){
+
+        Button createProfileButton = new Button("Create Profile");
+        createProfileButton.setOnAction(event -> {
             setAsBodyPane(this.createSignUpForm());
         });
-        menuBar.getChildren().add(createProfileClass);
-
+        menuButtons[0] = createProfileButton;
         Button addClassButton = new Button("Create Class");
         addClassButton.setOnAction(event -> {
             setAsBodyPane(this.addCreateNewClassForm());
         });
-        menuBar.getChildren().add(addClassButton);
-
+        menuButtons[1] = addClassButton;
         Button loginButton = new Button("Login");
         loginButton.setOnAction(event -> {
             setAsBodyPane(this.createLoginForm());
         });
-        menuBar.getChildren().add(loginButton);
+        menuButtons[2] = loginButton;
+        Button logoutButton = new Button("Logout");
+        logoutButton.setOnAction(event -> {
+            controller.getFsm().setState(FiniteStateMachine.LOGGED_OUT_STATE);
+            controller.logout();
+            updateMenuBarState();
+            setAsBodyPane(createHomeScreen());
+        });
+        menuButtons[3] = logoutButton;
 
-        return menuBar;
+        menuButtons[4] = createSearchBar();
+    }
+    public void updateMenuBarState(){
+        menuBar.getChildren().clear();
+        String state = controller.getFsm().getCurrentState();
+        for(int i = 0; i < menuButtons.length; i++){
+            if((state.charAt(i)+"").equalsIgnoreCase("1")){
+                menuBar.getChildren().add(menuButtons[i]);
+            }
+        }
     }
     public void setAsBodyPane(Pane pane){
         root.getChildren().remove(currenBodyPane);
         root.getChildren().add(pane);
         root.setMargin(pane, new Insets(210,0,0,400));
         currenBodyPane = pane;
+    }
+    public HBox createSearchBar(){
+        HBox searchBar = new HBox();
+
+        TextField searchField = new TextField();
+        Button submitSearch = new Button("Search User");
+        searchBar.getChildren().add(searchField);
+        searchBar.getChildren().add(submitSearch);
+        submitSearch.setOnAction(event -> {
+            User temp = controller.searchForUser(searchField.getText());
+            if(temp != null){
+                setAsBodyPane(createUserPage(temp));
+            }
+        });
+        return searchBar;
+    }
+    public GridPane createHomeScreen(){
+        GridPane homescreen = new GridPane();
+
+        Label label = new Label("Home Screen");
+        homescreen.add(label,0,0);
+
+        return homescreen;
+
+
+    }
+    public GridPane createUserPage(User user){
+        GridPane userPage = new GridPane();
+
+        Label userNameLabel = new Label("UserName: " + user.getUsername());
+        Label majorLabel  = new Label("major: " + user.getMajor());
+        Label yearLabel = new Label("Year: " + user.getYear());
+        Label gitLabel = new Label("Git: " + user.getGit());
+        Label website = new Label("Website: " + user.getWebsite());
+        Label courses = new Label("Courses: " + user.getCourses());
+        Label email  = new Label("Email: " + user.getEmail());
+
+        userPage.add(userNameLabel ,0,0);
+        userPage.add(majorLabel    ,0,1);
+        userPage.add(yearLabel     ,0,2);
+        userPage.add(gitLabel      ,0,3);
+        userPage.add(website       ,0,4);
+        userPage.add(courses       ,0,5);
+        userPage.add(email         ,0,6);
+
+
+
+        return userPage;
     }
     public GridPane createLoginForm(){
         GridPane loginForm = new GridPane();
@@ -102,6 +180,9 @@ public class GUIManager extends Application {
                 loginForm.setMargin(successLabel,new Insets(15,0,0,0));
                 usernameOrEmail.clear();
                 password.clear();
+                controller.getFsm().setState(FiniteStateMachine.LOGGED_IN_STATE);
+                updateMenuBarState();
+                setAsBodyPane(createUserPage(controller.getCurrentUser()));
             }
             else{
                 if(successLabel != null) {
@@ -212,6 +293,9 @@ public class GUIManager extends Application {
                 websiteTextField.clear();
                 coursesTextField.clear();
                 emailTextField.clear();
+                controller.getFsm().setState(FiniteStateMachine.LOGGED_IN_STATE);
+                updateMenuBarState();
+                setAsBodyPane(createUserPage(controller.getCurrentUser()));
             }
         });
         signupForm.add(submitNewUser    ,0,10);
