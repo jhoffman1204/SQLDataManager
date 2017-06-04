@@ -22,11 +22,8 @@ public class Controller {
         fsm.init();
         this.guiManager = guiManager;
 
-        messageManager.init();
-        Message[] messages = this.retrieveMessages("dcooper123");
-        for(int i = 0; i < 4; i++){
-            System.out.println(messages[i].getBody());
-        }
+//        messageManager.init();
+//        Message[] messages = this.retrieveMessages("dcooper123");
     }
     public void addUserToClassInformation(){
         classInformationManager.init();
@@ -105,9 +102,16 @@ public class Controller {
         messageManager.closeConnection();
     }
     public Message[] retrieveMessages(String username){
-
-        return messageManager.retrieveMessages(username);
-
+        messageManager.init();
+        Message[] a = messageManager.retrieveMessages(username);
+        messageManager.closeConnection();
+        return a;
+    }
+    public ClassInformation[] retrieveClasses(String username){
+        classInformationManager.init();
+        ClassInformation[] a = classInformationManager.retrieveClasses(username);
+        classInformationManager.closeConnection();
+        return a;
     }
     /**
      * Getter and Setter methods

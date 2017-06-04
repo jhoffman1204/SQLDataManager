@@ -64,4 +64,34 @@ public class ClassInformationManager extends DataManager {
         }
         return null;
     }
+    public ClassInformation[] retrieveClasses(String username){
+        ClassInformation temp = new ClassInformation();
+        String usernametemp = username;
+        ClassInformation[] classes = new ClassInformation[30];
+        int messageCounter = 0;
+        try {
+            Statement st = conn.createStatement();
+            String sql = ("SELECT * FROM classinformation;");
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                if(username.equalsIgnoreCase(rs.getString(6))) {
+                    ClassInformation temp2 = new ClassInformation();
+                    temp2.setClass_name(rs.getString(1));
+                    temp2.setDescription(rs.getString(2));
+                    temp2.setProfessor(rs.getString(3));
+                    temp2.setSemester(rs.getString(4));
+                    temp2.setPrerequisites(rs.getString(5));
+                    temp2.setAdmins(rs.getString(6));
+
+                    classes[messageCounter] = temp2;
+                    messageCounter++;
+
+                }
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return classes;
+    }
 }

@@ -10,15 +10,16 @@ public class FiniteStateMachine {
      * 3. Logout Button
      * 4. Search Bar
      * 6. Send Collab Request
+     * 7. Show Messages
      *
      * 0 = not visible
      * 1 = top menu bar
      * 2 = left menu bar
      * @return
-     *////                                         012345
-    public static final String LOGGED_OUT_STATE = "101000";
-    public static final String LOGGED_IN_STATE  = "010110";
-    public static final String VIEW_USER_STATE  = "010112";
+     *////                                         01234567
+    public static final String LOGGED_OUT_STATE = "10100000";
+    public static final String LOGGED_IN_STATE  = "01011011";
+    public static final String VIEW_USER_STATE  = "01011211";
     private String currentState;
     public void init(){
 

@@ -27,10 +27,10 @@ public class GUIManager extends Application {
     Pane currenBodyPane;
     HBox menuBar;
     HBox mainPage = new HBox();
-    HBox pageSpeicificOptionBar;
+    VBox pageSpeicificOptionBar;
     VBox leftMenuBar = new VBox();
     Label successLabel;
-    Node[] menuButtons = new Node[6];
+    Node[] menuButtons = new Node[8];
     PaneGenerator pangegen = new PaneGenerator();
     String currentViewingUser;
     Button viewMessages;
@@ -49,7 +49,7 @@ public class GUIManager extends Application {
         menuBar = new HBox();
         //menuBar.setStyle("-fx-border-color: black;-fx-border-width: 7px;");
 
-        pageSpeicificOptionBar = new HBox();
+        pageSpeicificOptionBar = new VBox();
         pageSpeicificOptionBar.setPrefSize(300,300);
         pageSpeicificOptionBar.setMinSize(250,770);
         pageSpeicificOptionBar.setMaxSize(250,770);
@@ -114,10 +114,81 @@ public class GUIManager extends Application {
             setAsBodyPane(this.createSendCollabRequestPane());
         });
 
-        viewMessages = new Button();
+        viewMessages = new Button("Inbox");
+        menuButtons[6] = viewMessages;
+        viewMessages.setOnAction(event -> {
+            setAsBodyPane(this.createInbox());
+        });
+
+        Button viewClasses = new Button("View Classes");
+        viewClasses.setOnAction(event -> {
+            setAsBodyPane(createClassesPane(controller.getCurrentUser().getUsername()));
+        });
+        menuButtons[7] = viewClasses;
+
 
     }
+    public HBox createClassesPane(String username){
+        HBox mainPane = new HBox();
+        VBox classSelectPane = new VBox();
+        VBox informationPane = new VBox();
 
+        mainPane.getChildren().add(classSelectPane);
+        mainPane.getChildren().add(informationPane);
+
+        ClassInformation[] classes = controller.retrieveClasses(username);
+
+        Label participantLabel = new Label("Classes you are a member of");
+
+        Label adminLabel = new Label("Classes you are the admin of: ");
+        classSelectPane.getChildren().add(adminLabel);
+        for(int i = 0; i < 30; i++){
+            if(classes[i] != null){
+                ClassInformation temp  = classes[i];
+                Button button = new Button(classes[i].getClass_name());
+                classSelectPane.getChildren().add(button);
+                button.setOnAction(event -> {
+                    informationPane.getChildren().clear();
+                    Label description = new Label("Description: " + temp.getDescription());
+                    Label professor = new Label("Professor: " + temp.getProfessor());
+                    Label semester = new Label("Semester: "  + temp.getSemester());
+                    informationPane.getChildren().add(description);
+                    informationPane.getChildren().add(professor);
+                    informationPane.getChildren().add(semester);
+                });
+            }
+        }
+
+        return mainPane;
+    }
+    public HBox createInbox(){
+        HBox pane = new HBox();
+        VBox subjects = new VBox();
+        VBox showMessage = new VBox();
+        pane.getChildren().add(subjects);
+        pane.getChildren().add(showMessage);
+        Label message = new Label("message");
+        Label sender  = new Label("Sent by: ");
+
+        Message[] messages = controller.retrieveMessages(controller.getCurrentUser().getUsername());
+        for(int i = 0; i < messages.length; i++){
+            if(messages[i] != null) {
+                Button button = new Button(messages[i].getSubject());
+                String messagereceieved = messages[i].getBody();
+                String senderText = messages[i].getSendingUser();
+                button.setOnAction(event -> {
+                    sender.setText("Sent by: " + senderText);
+                    message.setText(messagereceieved);
+
+                });
+                subjects.getChildren().add(button);
+            }
+        }
+        showMessage.getChildren().add(sender);
+        showMessage.getChildren().add(message);
+        pane.setMargin(showMessage, new Insets(0,0,0,50));
+        return pane;
+    }
     /**
      * Clears the menu and determines which buttons to display based on the current state
      */
@@ -172,15 +243,6 @@ public class GUIManager extends Application {
         leftMenuBar.getChildren().add(label);
 
         return leftMenuBar;
-    }
-    public HBox createPageSpecificOptions(){
-        pageSpeicificOptionBar = new HBox();
-        Button collabRequestButton = new Button("Collab");
-        collabRequestButton.setOnAction(event -> {
-            System.out.println("test");
-        });
-        pageSpeicificOptionBar.getChildren().add(collabRequestButton);
-        return pageSpeicificOptionBar;
     }
     /**
      * Clears the current body pane and adds the new parameter pane
