@@ -6,17 +6,27 @@ public class Controller {
     UserDataManager userManager;
     ClassParticipantManager classParticipantManager;
     ClassInformationManager classInformationManager;
+    MessageManager messageManager;
     FiniteStateMachine fsm;
+    GUIManager guiManager;
     User currentUser;
     /**
      * This class is initialized by the GUIManager and the main instance will be accessed from there
      */
-    public void init(){
+    public void init(GUIManager guiManager){
         userManager = new UserDataManager();
         classParticipantManager = new ClassParticipantManager();
         classInformationManager = new ClassInformationManager();
+        messageManager = new MessageManager();
         fsm = new FiniteStateMachine();
         fsm.init();
+        this.guiManager = guiManager;
+
+        messageManager.init();
+        Message[] messages = this.retrieveMessages("dcooper123");
+        for(int i = 0; i < 4; i++){
+            System.out.println(messages[i].getBody());
+        }
     }
     public void addUserToClassInformation(){
         classInformationManager.init();
@@ -87,7 +97,18 @@ public class Controller {
             return temp;
         }
     }
+    public void sendMessage(String desintationUser, String body, String message){
 
+        Message newMessage = new Message(this.currentUser.getUsername(), desintationUser, body, message);
+        messageManager.init();
+        messageManager.addData(newMessage);
+        messageManager.closeConnection();
+    }
+    public Message[] retrieveMessages(String username){
+
+        return messageManager.retrieveMessages(username);
+
+    }
     /**
      * Getter and Setter methods
      */

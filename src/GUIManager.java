@@ -26,8 +26,14 @@ public class GUIManager extends Application {
     // sets the main focus pane to be generic so that it is easy to remove and swap for other
     Pane currenBodyPane;
     HBox menuBar;
+    HBox mainPage = new HBox();
+    HBox pageSpeicificOptionBar;
+    VBox leftMenuBar = new VBox();
     Label successLabel;
-    Node[] menuButtons = new Node[5];
+    Node[] menuButtons = new Node[6];
+    PaneGenerator pangegen = new PaneGenerator();
+    String currentViewingUser;
+    Button viewMessages;
 
     public static void main(String[] args) {
         launch(args);
@@ -37,10 +43,22 @@ public class GUIManager extends Application {
         this.init();
         primaryStage.setTitle("Code Dash");
 
+        // root contains the menuBar and the mainPage
+        // mainPage contains the pageSpecificOptionbar and the currentBodyPane
         root = new StackPane();
         menuBar = new HBox();
+        //menuBar.setStyle("-fx-border-color: black;-fx-border-width: 7px;");
+
+        pageSpeicificOptionBar = new HBox();
+        pageSpeicificOptionBar.setPrefSize(300,300);
+        pageSpeicificOptionBar.setMinSize(250,770);
+        pageSpeicificOptionBar.setMaxSize(250,770);
+        pageSpeicificOptionBar.setStyle("-fx-border-color: black;-fx-border-width: 7px;");
         this.initializeMenuBar();
         root.getChildren().add(menuBar);
+        root.getChildren().add(mainPage);
+        mainPage.getChildren().add(pageSpeicificOptionBar);
+        root.setMargin(mainPage, new Insets(30,0,0,0));
         controller.getFsm().setState(FiniteStateMachine.LOGGED_OUT_STATE);
         this.updateMenuBarState();
 
@@ -48,7 +66,7 @@ public class GUIManager extends Application {
         primaryStage.show();
     }
     public void init(){
-        controller.init();
+        controller.init(this);
     }
 
     /**
@@ -58,6 +76,8 @@ public class GUIManager extends Application {
      * 2. Login Button
      * 3. Logout Button
      * 4. Search Bar
+     * 5. Left Menu Bar
+     * 6. Send Collab Request
      * @return
      */
     public void initializeMenuBar(){
@@ -87,6 +107,15 @@ public class GUIManager extends Application {
         menuButtons[3] = logoutButton;
 
         menuButtons[4] = createSearchBar();
+
+        Button sendCollabButton = new Button("Send Collaboration Request");
+        menuButtons[5] = sendCollabButton;
+        sendCollabButton.setOnAction(event -> {
+            setAsBodyPane(this.createSendCollabRequestPane());
+        });
+
+        viewMessages = new Button();
+
     }
 
     /**
@@ -94,23 +123,78 @@ public class GUIManager extends Application {
      */
     public void updateMenuBarState(){
         menuBar.getChildren().clear();
+        pageSpeicificOptionBar.getChildren().clear();
+        //pageSpeicificOptionBar.getChildren().clear();
         String state = controller.getFsm().getCurrentState();
         for(int i = 0; i < menuButtons.length; i++){
             if((state.charAt(i)+"").equalsIgnoreCase("1")){
                 menuBar.getChildren().add(menuButtons[i]);
             }
+            else if((state.charAt(i)+"").equalsIgnoreCase("2")){
+                pageSpeicificOptionBar.getChildren().add(menuButtons[i]);
+            }
         }
-    }
 
+    }
+    public VBox createSendCollabRequestPane(){
+        VBox pane = new VBox();
+        Label viewUserLabel = new Label("Sending Message to: " + currentViewingUser);
+        TextField subjectField = new TextField();
+        Label subject = new Label("Subject: ");
+        Label message = new Label("Message: ");
+        subjectField.setMinSize(200,50);
+        subjectField.setMaxSize(200,50);
+        TextField bodyField = new TextField();
+        bodyField.setMinSize(400,200);
+        bodyField.setMaxSize(400,200);
+
+        pane.getChildren().add(viewUserLabel);
+        pane.getChildren().add(subject);
+        pane.getChildren().add(subjectField);
+        pane.getChildren().add(message);
+        pane.getChildren().add(bodyField);
+
+        Button submit = new Button("Send");
+        submit.setOnAction(event -> {
+            controller.sendMessage(currentViewingUser, subjectField.getText(), bodyField.getText());
+            subjectField.clear();
+            bodyField.clear();
+            viewUserLabel.setText("Message Sent!");
+        });
+        pane.getChildren().add(submit);
+        return pane;
+    }
+    public VBox createLeftMenuBar(){
+        VBox leftMenuBar = new VBox();
+
+
+        Label label = new Label("Test to see if something shows up here");
+        leftMenuBar.getChildren().add(label);
+
+        return leftMenuBar;
+    }
+    public HBox createPageSpecificOptions(){
+        pageSpeicificOptionBar = new HBox();
+        Button collabRequestButton = new Button("Collab");
+        collabRequestButton.setOnAction(event -> {
+            System.out.println("test");
+        });
+        pageSpeicificOptionBar.getChildren().add(collabRequestButton);
+        return pageSpeicificOptionBar;
+    }
     /**
      * Clears the current body pane and adds the new parameter pane
      * @param pane: Generic Pane so it can be a HBox, GridPane etc.
      */
     public void setAsBodyPane(Pane pane){
-        root.getChildren().remove(currenBodyPane);
-        root.getChildren().add(pane);
-        root.setMargin(pane, new Insets(210,0,0,400));
+        mainPage.getChildren().remove(currenBodyPane);
+        mainPage.getChildren().add(pane);
+        mainPage.setMargin(pane, new Insets(100,0,0,200));
+        pane.setMaxSize(500,500);
+        pane.setMinSize(500,500);
+        pane.setStyle("-fx-border-color: black;-fx-border-width: 7px;");
         currenBodyPane = pane;
+        menuBar.setStyle("-fx-border-color: black;-fx-border-width: 2px;");
     }
 
     /**
@@ -122,13 +206,16 @@ public class GUIManager extends Application {
         HBox searchBar = new HBox();
 
         TextField searchField = new TextField();
-        Button submitSearch = new Button("Search User");
+        Button submitSearch = new Button("Search");
         searchBar.getChildren().add(searchField);
         searchBar.getChildren().add(submitSearch);
         submitSearch.setOnAction(event -> {
             User temp = controller.searchForUser(searchField.getText());
             if(temp != null){
+                controller.getFsm().setState(FiniteStateMachine.VIEW_USER_STATE);
                 setAsBodyPane(createUserPage(temp));
+                updateMenuBarState();
+                currentViewingUser = temp.getUsername();
             }
             ClassInformation classInformation = controller.searchForClass(searchField.getText());
             if(classInformation != null){
@@ -201,10 +288,10 @@ public class GUIManager extends Application {
         loginForm.add(usernameOrEmail,1,0);
         loginForm.add(password,1,1);
 
-        loginForm.setMargin(usernameOrEmailLabel , new Insets(0,0,15,0));
-        loginForm.setMargin(passwordLabel        , new Insets(0,0,15,0));
-        loginForm.setMargin(usernameOrEmail      , new Insets(0,0,15,0));
-        loginForm.setMargin(password             , new Insets(0,0,15,0));
+        loginForm.setMargin(usernameOrEmailLabel , new Insets(20,0,15,20));
+        loginForm.setMargin(passwordLabel        , new Insets(20,0,15,20));
+        loginForm.setMargin(usernameOrEmail      , new Insets(20,0,15,20));
+        loginForm.setMargin(password             , new Insets(20,0,15,20));
 
         Button loginSubmit = new Button("Login");
         loginSubmit.setOnAction(event -> {
@@ -232,6 +319,7 @@ public class GUIManager extends Application {
         });
 
         loginForm.add(loginSubmit,0,2);
+        loginForm.setMargin(loginSubmit, new Insets(20,0,15,20));
 
         return loginForm;
     }
