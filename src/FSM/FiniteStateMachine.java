@@ -1,3 +1,5 @@
+package FSM;
+
 /**
  * Created by James on 5/27/2017.
  */
@@ -9,17 +11,16 @@ public class FiniteStateMachine {
      * 2. Login Button
      * 3. Logout Button
      * 4. Search Bar
-     * 6. Send Collab Request
-     * 7. Show Messages
-     *
-     * 0 = not visible
-     * 1 = top menu bar
-     * 2 = left menu bar
+     * 5. Send Collab Request
+     * 6. View Messages
+     * 7. View Classes
      * @return
-     *////                                         01234567
-    public static final String LOGGED_OUT_STATE = "10100000";
-    public static final String LOGGED_IN_STATE  = "01011011";
-    public static final String VIEW_USER_STATE  = "01011211";
+     */
+     ////                                              012345678
+    public static final String LOGGED_OUT_STATE     = "101000000";
+    public static final String LOGGED_IN_STATE      = "010110110";
+    public static final String VIEW_USER_STATE      = "010112110";
+    public static final String VIEW_CLASS_AS_ADMIN  = "010110112";
     private String currentState;
     public void init(){
 

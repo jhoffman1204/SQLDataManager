@@ -1,3 +1,9 @@
+package Data.DatabaseManagers;
+
+import Data.DataObjects.ClassParticipant;
+import Data.DataManager;
+import Data.DataObjects.User;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 

@@ -1,3 +1,8 @@
+package Data.DatabaseManagers;
+
+import Data.DataManager;
+import Data.DataObjects.User;
+
 import java.sql.*;
 import java.util.Calendar;
 

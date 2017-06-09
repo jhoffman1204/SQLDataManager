@@ -1,8 +1,9 @@
 /**
  * Created by James on 5/26/2017.
  */
-import com.sun.org.apache.xml.internal.security.algorithms.implementations.IntegrityHmac;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+import Data.DataObjects.ClassInformation;
+import Data.DataObjects.User;
+import FSM.FiniteStateMachine;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,8 +15,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-
-import static javafx.application.Application.launch;
 
 
 public class GUIManager extends Application {
@@ -30,7 +29,7 @@ public class GUIManager extends Application {
     VBox pageSpeicificOptionBar;
     VBox leftMenuBar = new VBox();
     Label successLabel;
-    Node[] menuButtons = new Node[8];
+    Node[] menuButtons = new Node[9];
     PaneGenerator pangegen = new PaneGenerator();
     String currentViewingUser;
     Button viewMessages;
@@ -76,8 +75,9 @@ public class GUIManager extends Application {
      * 2. Login Button
      * 3. Logout Button
      * 4. Search Bar
-     * 5. Left Menu Bar
-     * 6. Send Collab Request
+     * 5. Send Collab Request
+     * 6. View Messages
+     * 7. View Classes
      * @return
      */
     public void initializeMenuBar(){
@@ -126,6 +126,12 @@ public class GUIManager extends Application {
         });
         menuButtons[7] = viewClasses;
 
+        Button addUser = new Button("Add User to Class");
+        addUser.setOnAction(event -> {
+            setAsBodyPane(createClassesPane(controller.getCurrentUser().getUsername()));
+        });
+        menuButtons[8] = addUser;
+
 
     }
     public HBox createClassesPane(String username){
@@ -145,16 +151,20 @@ public class GUIManager extends Application {
         for(int i = 0; i < 30; i++){
             if(classes[i] != null){
                 ClassInformation temp  = classes[i];
-                Button button = new Button(classes[i].getClass_name());
+                Button button = new Button(classes[i].getClass_name() + " : " + classes[i].getProfessor());
+                button.setMinSize(475,100);
+                button.setMaxSize(475,100);
                 classSelectPane.getChildren().add(button);
                 button.setOnAction(event -> {
-                    informationPane.getChildren().clear();
+                    mainPane.getChildren().clear();
                     Label description = new Label("Description: " + temp.getDescription());
                     Label professor = new Label("Professor: " + temp.getProfessor());
                     Label semester = new Label("Semester: "  + temp.getSemester());
-                    informationPane.getChildren().add(description);
-                    informationPane.getChildren().add(professor);
-                    informationPane.getChildren().add(semester);
+                    mainPane.getChildren().add(description);
+                    mainPane.getChildren().add(professor);
+                    mainPane.getChildren().add(semester);
+                    controller.setState(FiniteStateMachine.VIEW_CLASS_AS_ADMIN);
+                    updateMenuBarState();
                 });
             }
         }
@@ -195,7 +205,6 @@ public class GUIManager extends Application {
     public void updateMenuBarState(){
         menuBar.getChildren().clear();
         pageSpeicificOptionBar.getChildren().clear();
-        //pageSpeicificOptionBar.getChildren().clear();
         String state = controller.getFsm().getCurrentState();
         for(int i = 0; i < menuButtons.length; i++){
             if((state.charAt(i)+"").equalsIgnoreCase("1")){
@@ -234,15 +243,6 @@ public class GUIManager extends Application {
         });
         pane.getChildren().add(submit);
         return pane;
-    }
-    public VBox createLeftMenuBar(){
-        VBox leftMenuBar = new VBox();
-
-
-        Label label = new Label("Test to see if something shows up here");
-        leftMenuBar.getChildren().add(label);
-
-        return leftMenuBar;
     }
     /**
      * Clears the current body pane and adds the new parameter pane

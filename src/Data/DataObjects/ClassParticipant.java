@@ -1,3 +1,5 @@
+package Data.DataObjects;
+
 /**
  * Created by James on 5/26/2017.
  */
@@ -8,7 +10,7 @@ public class ClassParticipant {
     private String year;
 
     /**
-     * for generic ClassParticipant objects
+     * for generic Data.DataObjects.ClassParticipant objects
      */
     public ClassParticipant(){
 

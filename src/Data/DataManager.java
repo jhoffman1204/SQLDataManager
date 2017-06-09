@@ -1,7 +1,6 @@
-import javafx.scene.chart.PieChart;
+package Data;
 
 import java.sql.*;
-import java.util.Calendar;
 
 /**
  * Created by James on 5/25/2017.
@@ -18,7 +17,7 @@ public abstract class DataManager {
 
     /**
      * Child classes implementation works as follows:
-     * UserDataManager takes a user object and adds that to the users database
+     * Data.DatabaseManagers.UserDataManager takes a user object and adds that to the users database
      * ClassParticipationManager takes in a classParticipation object and adds that to the database
      *
      * @param obj
@@ -26,7 +25,7 @@ public abstract class DataManager {
     public abstract void addData(Object obj);
     public abstract Object retrieveData(String key);
     /**
-     * This method will only be called by child class of DataManager. The initialization will set the table to the class that it was initialized by.
+     * This method will only be called by child class of Data.DataManager. The initialization will set the table to the class that it was initialized by.
      * The current database that is being connected to is decided by the developer
      * Calls the connectToDataBase() method
      * @param table: the table that is currently being manipulated

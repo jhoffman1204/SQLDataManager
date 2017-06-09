@@ -1,3 +1,10 @@
+import Data.DataObjects.ClassInformation;
+import Data.DataObjects.User;
+import Data.DatabaseManagers.ClassInformationManager;
+import Data.DatabaseManagers.ClassParticipantManager;
+import Data.DatabaseManagers.UserDataManager;
+import FSM.FiniteStateMachine;
+
 /**
  * Created by James on 5/25/2017.
  */
@@ -107,6 +114,12 @@ public class Controller {
         messageManager.closeConnection();
         return a;
     }
+
+    /**
+     * Retrieves class that a user is the admin of
+     * @param username: the admin to retrieve their classes
+     * @return: An array of ClassInformation Objects
+     */
     public ClassInformation[] retrieveClasses(String username){
         classInformationManager.init();
         ClassInformation[] a = classInformationManager.retrieveClasses(username);

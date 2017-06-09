@@ -1,3 +1,5 @@
+package Data.DataObjects;
+
 /**
  * Created by James on 5/26/2017.
  */

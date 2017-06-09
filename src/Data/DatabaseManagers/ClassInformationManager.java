@@ -1,3 +1,8 @@
+package Data.DatabaseManagers;
+
+import Data.DataObjects.ClassInformation;
+import Data.DataManager;
+
 import java.sql.*;
 
 /**
