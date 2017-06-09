@@ -1,4 +1,7 @@
+package Data.DatabaseManagers;
+
 import Data.DataManager;
+import Data.DataObjects.Message;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

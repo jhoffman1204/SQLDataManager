@@ -1,9 +1,14 @@
+package Controller;
+
 import Data.DataObjects.ClassInformation;
+import Data.DataObjects.Message;
 import Data.DataObjects.User;
 import Data.DatabaseManagers.ClassInformationManager;
 import Data.DatabaseManagers.ClassParticipantManager;
+import Data.DatabaseManagers.MessageManager;
 import Data.DatabaseManagers.UserDataManager;
 import FSM.FiniteStateMachine;
+import GUI.GUIManager;
 
 /**
  * Created by James on 5/25/2017.
@@ -18,7 +23,7 @@ public class Controller {
     GUIManager guiManager;
     User currentUser;
     /**
-     * This class is initialized by the GUIManager and the main instance will be accessed from there
+     * This class is initialized by the GUI.GUIManager and the main instance will be accessed from there
      */
     public void init(GUIManager guiManager){
         userManager = new UserDataManager();
@@ -30,7 +35,7 @@ public class Controller {
         this.guiManager = guiManager;
 
 //        messageManager.init();
-//        Message[] messages = this.retrieveMessages("dcooper123");
+//        Data.DataObjects.Message[] messages = this.retrieveMessages("dcooper123");
     }
     public void addUserToClassInformation(){
         classInformationManager.init();

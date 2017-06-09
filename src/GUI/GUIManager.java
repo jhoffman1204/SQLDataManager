@@ -1,7 +1,9 @@
-/**
+package GUI; /**
  * Created by James on 5/26/2017.
  */
+import Controller.Controller;
 import Data.DataObjects.ClassInformation;
+import Data.DataObjects.Message;
 import Data.DataObjects.User;
 import FSM.FiniteStateMachine;
 import javafx.application.Application;
@@ -20,7 +22,7 @@ import javafx.stage.Stage;
 public class GUIManager extends Application {
 
     private String state;
-    Controller controller = new Controller();
+    Controller controller;
     StackPane root;
     // sets the main focus pane to be generic so that it is easy to remove and swap for other
     Pane currenBodyPane;
@@ -30,18 +32,14 @@ public class GUIManager extends Application {
     VBox leftMenuBar = new VBox();
     Label successLabel;
     Node[] menuButtons = new Node[9];
-    PaneGenerator pangegen = new PaneGenerator();
     String currentViewingUser;
     Button viewMessages;
 
-    public static void main(String[] args) {
-        launch(args);
-    }
     @Override
     public void start(Stage primaryStage) {
         this.init();
         primaryStage.setTitle("Code Dash");
-
+        Controller controller;
         // root contains the menuBar and the mainPage
         // mainPage contains the pageSpecificOptionbar and the currentBodyPane
         root = new StackPane();
@@ -58,16 +56,19 @@ public class GUIManager extends Application {
         root.getChildren().add(mainPage);
         mainPage.getChildren().add(pageSpeicificOptionBar);
         root.setMargin(mainPage, new Insets(30,0,0,0));
-        controller.getFsm().setState(FiniteStateMachine.LOGGED_OUT_STATE);
+        this.controller.getFsm().setState(FiniteStateMachine.LOGGED_OUT_STATE);
         this.updateMenuBarState();
 
         primaryStage.setScene(new Scene(root, 1200, 800));
         primaryStage.show();
     }
     public void init(){
+        controller = new Controller();
         controller.init(this);
     }
-
+    public void setController(Controller controller){
+        this.controller = controller;
+    }
     /**
      * The state manager controls which buttons need to be visible
      * 0. Create Profile Button
@@ -218,10 +219,10 @@ public class GUIManager extends Application {
     }
     public VBox createSendCollabRequestPane(){
         VBox pane = new VBox();
-        Label viewUserLabel = new Label("Sending Message to: " + currentViewingUser);
+        Label viewUserLabel = new Label("Sending Data.DataObjects.Message to: " + currentViewingUser);
         TextField subjectField = new TextField();
         Label subject = new Label("Subject: ");
-        Label message = new Label("Message: ");
+        Label message = new Label("Data.DataObjects.Message: ");
         subjectField.setMinSize(200,50);
         subjectField.setMaxSize(200,50);
         TextField bodyField = new TextField();
@@ -239,7 +240,7 @@ public class GUIManager extends Application {
             controller.sendMessage(currentViewingUser, subjectField.getText(), bodyField.getText());
             subjectField.clear();
             bodyField.clear();
-            viewUserLabel.setText("Message Sent!");
+            viewUserLabel.setText("Data.DataObjects.Message Sent!");
         });
         pane.getChildren().add(submit);
         return pane;
