@@ -62,6 +62,10 @@ public class GUIManager extends Application {
         primaryStage.setScene(new Scene(root, 1200, 800));
         primaryStage.show();
     }
+
+    /**
+     * initializes this and the controller that the gui will be referencing
+     */
     public void init(){
         controller = new Controller();
         controller.init(this);
