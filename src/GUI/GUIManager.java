@@ -139,6 +139,12 @@ public class GUIManager extends Application {
 
 
     }
+
+    /**
+     * This needs to be moved to another class
+     * @param username
+     * @return
+     */
     public HBox createClassesPane(String username){
         HBox mainPane = new HBox();
         VBox classSelectPane = new VBox();
