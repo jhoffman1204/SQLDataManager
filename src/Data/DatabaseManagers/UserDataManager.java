@@ -79,8 +79,8 @@ public class UserDataManager extends DataManager {
                     user.setGit(rs.getString(7));
                     user.setWebsite(rs.getString(8));
                     user.setCourses(rs.getString(9));
-                    user.setStudentID(Integer.parseInt(rs.getString(10)));
-                    user.setEmail(rs.getString(11));
+                    user.setEmail(rs.getString(10));
+                    user.setStudentID(Integer.parseInt(rs.getString(11)));
                     return user;
                 }
             }

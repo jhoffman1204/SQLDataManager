@@ -32,7 +32,7 @@ public abstract class DataManager {
      * @return: a Connection that a child class will use
      */
     public Connection init(String table){
-        this.currentDatabaseConnectionURL = localHostConnectionURL;
+        this.currentDatabaseConnectionURL = onlineDataBaseConnectionURL;
         this.currentlySelectedTable = table;
         return connectToDataBase(this.currentDatabaseConnectionURL);
     }
