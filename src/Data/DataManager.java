@@ -32,9 +32,40 @@ public abstract class DataManager {
      * @return: a Connection that a child class will use
      */
     public Connection init(String table){
-        this.currentDatabaseConnectionURL = localHostConnectionURL;
+        //this.createTable();
+
+        this.currentDatabaseConnectionURL = onlineDataBaseConnectionURL;
         this.currentlySelectedTable = table;
         return connectToDataBase(this.currentDatabaseConnectionURL);
+    }
+    public void createTable(){
+        try{
+            String onlineDataBaseConnectionURL = "jdbc:mysql://77.104.151.241/stonybr8_test?" +
+                    "user=stonybr8_james&password=hoffman96&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+
+            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+            this.conn = DriverManager.getConnection(onlineDataBaseConnectionURL);
+
+            String query = "CREATE TABLE users(" +
+                    "first_name VARCHAR(30) NOT NULL," +
+                    "last_name VARCHAR(30) NOT NULL," +
+                    "username VARCHAR(15) NOT NULL," +
+                    "password VARCHAR(15) NOT NULL," +
+                    "major VARCHAR(15) NOT NULL," +
+                    "year VARCHAR(15) NOT NULL," +
+                    "git VARCHAR(45) NOT NULL," +
+                    "website VARCHAR(45) NOT NULL," +
+                    "courses VARCHAR(60) NOT NULL," +
+                    "student_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY" +
+                    "email VARCHAR(60) NOT NULL," +
+                    ");";
+
+            PreparedStatement preparedStmt = conn.prepareStatement(query);
+            preparedStmt.execute();
+        }
+        catch(Exception e){
+
+        }
     }
     public Connection connectToDataBase(String connectionURL){
         try {

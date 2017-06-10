@@ -1,5 +1,6 @@
 package Controller;
 
+import Data.DataManager;
 import Data.DataObjects.ClassInformation;
 import Data.DataObjects.Message;
 import Data.DataObjects.User;
@@ -33,7 +34,6 @@ public class Controller {
         fsm = new FiniteStateMachine();
         fsm.init();
         this.guiManager = guiManager;
-
 //        messageManager.init();
 //        Data.DataObjects.Message[] messages = this.retrieveMessages("dcooper123");
     }
