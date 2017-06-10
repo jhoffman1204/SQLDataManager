@@ -61,6 +61,12 @@ public class UserDataManager extends DataManager {
             e.printStackTrace();
         }
     }
+
+    /**
+     * another useless comment 
+     * @param username
+     * @return
+     */
     @Override
     public User retrieveData(String username) {
         User user = new User();

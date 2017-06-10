@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="704706f0-6512-4e81-a32a-50d7ca5e542d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Data/DataManager.java" afterPath="$PROJECT_DIR$/src/Data/DataManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Data/DatabaseManagers/UserDataManager.java" afterPath="$PROJECT_DIR$/src/Data/DatabaseManagers/UserDataManager.java" />
     </list>
     <ignored path="SQLDataManager.iws" />
@@ -140,8 +138,8 @@
       <file leaf-file-name="UserDataManager.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Data/DatabaseManagers/UserDataManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="615">
-              <caret line="82" column="70" lean-forward="false" selection-start-line="82" selection-start-column="70" selection-end-line="82" selection-end-column="70" />
+            <state relative-caret-position="735">
+              <caret line="65" column="31" lean-forward="false" selection-start-line="65" selection-start-column="31" selection-end-line="65" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -1142,8 +1140,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Data/DatabaseManagers/UserDataManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="82" column="70" lean-forward="false" selection-start-line="82" selection-start-column="70" selection-end-line="82" selection-end-column="70" />
+        <state relative-caret-position="735">
+          <caret line="65" column="31" lean-forward="false" selection-start-line="65" selection-start-column="31" selection-end-line="65" selection-end-column="31" />
           <folding />
         </state>
       </provider>
