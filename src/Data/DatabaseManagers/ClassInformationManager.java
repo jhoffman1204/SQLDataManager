@@ -69,17 +69,22 @@ public class ClassInformationManager extends DataManager {
         }
         return null;
     }
-    public ClassInformation[] retrieveClasses(String username){
+    public ClassInformation[] retrieveClasses(String username, boolean admin, boolean participant){
         ClassInformation temp = new ClassInformation();
         String usernametemp = username;
         ClassInformation[] classes = new ClassInformation[30];
         int messageCounter = 0;
         try {
+            String compareString = null;
             Statement st = conn.createStatement();
             String sql = ("SELECT * FROM classinformation;");
             ResultSet rs = st.executeQuery(sql);
+
             while (rs.next()) {
-                if(username.equalsIgnoreCase(rs.getString(6))) {
+                if(admin) {
+                    compareString = rs.getString(6);
+                }
+                if(username.equalsIgnoreCase(compareString)) {
                     ClassInformation temp2 = new ClassInformation();
                     temp2.setClass_name(rs.getString(1));
                     temp2.setDescription(rs.getString(2));

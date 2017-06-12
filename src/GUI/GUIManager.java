@@ -6,6 +6,8 @@ import Data.DataObjects.ClassInformation;
 import Data.DataObjects.Message;
 import Data.DataObjects.User;
 import FSM.FiniteStateMachine;
+import GUI.ClassGUI.ClassPageController;
+import GUI.ClassGUI.ClassPageController;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -32,8 +34,12 @@ public class GUIManager extends Application {
     VBox leftMenuBar = new VBox();
     Label successLabel;
     Node[] menuButtons = new Node[9];
+    String currentUser;
     String currentViewingUser;
+    String currentClass;
     Button viewMessages;
+
+    ClassPageController classPage;
 
     @Override
     public void start(Stage primaryStage) {
@@ -68,6 +74,7 @@ public class GUIManager extends Application {
      */
     public void init(){
         controller = new Controller();
+        classPage  = new ClassPageController(this);
         controller.init(this);
     }
     public void setController(Controller controller){
@@ -83,7 +90,7 @@ public class GUIManager extends Application {
      * 5. Send Collab Request
      * 6. View Messages
      * 7. View Classes
-     * @return
+     * @
      */
     public void initializeMenuBar(){
 
@@ -127,60 +134,22 @@ public class GUIManager extends Application {
 
         Button viewClasses = new Button("View Classes");
         viewClasses.setOnAction(event -> {
-            setAsBodyPane(createClassesPane(controller.getCurrentUser().getUsername()));
+            ClassInformation[] classes = controller.retrieveClasses(this.currentUser);
+            ClassInformation[] participantClasses = new ClassInformation[5];
+            setAsBodyPane(classPage.createClassesPane(controller.getCurrentUser().getUsername(), classes, participantClasses));
+            controller.setState(FiniteStateMachine.VIEW_CLASS_AS_ADMIN);
+            updateMenuBarState();
         });
         menuButtons[7] = viewClasses;
 
         Button addUser = new Button("Add User to Class");
         addUser.setOnAction(event -> {
-            setAsBodyPane(createClassesPane(controller.getCurrentUser().getUsername()));
+            classPage.clearPage();
+            classPage.createaddUserPane(this.currentUser);
         });
         menuButtons[8] = addUser;
 
 
-    }
-
-    /**
-     * This needs to be moved to another class
-     * @param username
-     * @return
-     */
-    public HBox createClassesPane(String username){
-        HBox mainPane = new HBox();
-        VBox classSelectPane = new VBox();
-        VBox informationPane = new VBox();
-
-        mainPane.getChildren().add(classSelectPane);
-        mainPane.getChildren().add(informationPane);
-
-        ClassInformation[] classes = controller.retrieveClasses(username);
-
-        Label participantLabel = new Label("Classes you are a member of");
-
-        Label adminLabel = new Label("Classes you are the admin of: ");
-        classSelectPane.getChildren().add(adminLabel);
-        for(int i = 0; i < 30; i++){
-            if(classes[i] != null){
-                ClassInformation temp  = classes[i];
-                Button button = new Button(classes[i].getClass_name() + " : " + classes[i].getProfessor());
-                button.setMinSize(475,100);
-                button.setMaxSize(475,100);
-                classSelectPane.getChildren().add(button);
-                button.setOnAction(event -> {
-                    mainPane.getChildren().clear();
-                    Label description = new Label("Description: " + temp.getDescription());
-                    Label professor = new Label("Professor: " + temp.getProfessor());
-                    Label semester = new Label("Semester: "  + temp.getSemester());
-                    mainPane.getChildren().add(description);
-                    mainPane.getChildren().add(professor);
-                    mainPane.getChildren().add(semester);
-                    controller.setState(FiniteStateMachine.VIEW_CLASS_AS_ADMIN);
-                    updateMenuBarState();
-                });
-            }
-        }
-
-        return mainPane;
     }
     public HBox createInbox(){
         HBox pane = new HBox();
@@ -304,8 +273,6 @@ public class GUIManager extends Application {
         homescreen.add(label,0,0);
 
         return homescreen;
-
-
     }
     public GridPane createUserPage(User user){
         GridPane userPage = new GridPane();
@@ -380,6 +347,7 @@ public class GUIManager extends Application {
                 controller.getFsm().setState(FiniteStateMachine.LOGGED_IN_STATE);
                 updateMenuBarState();
                 setAsBodyPane(createUserPage(controller.getCurrentUser()));
+                this.currentUser = controller.getCurrentUser().getUsername();
             }
             else{
                 if(successLabel != null) {
@@ -572,5 +540,11 @@ public class GUIManager extends Application {
         createNewClassForm.add(submitNewUser    ,0,10);
 
         return createNewClassForm;
+    }
+    public void setCurrentClass(String currentClass){
+        this.currentClass = currentClass;
+    }
+    public Controller getController(){
+        return this.controller;
     }
 }

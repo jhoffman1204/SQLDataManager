@@ -1,6 +1,7 @@
 package Controller;
 
 import Data.DataObjects.ClassInformation;
+import Data.DataObjects.ClassParticipant;
 import Data.DataObjects.Message;
 import Data.DataObjects.User;
 import Data.DatabaseManagers.ClassInformationManager;
@@ -37,12 +38,6 @@ public class Controller {
 //        messageManager.init();
 //        Data.DataObjects.Message[] messages = this.retrieveMessages("dcooper123");
     }
-    public void addUserToClassInformation(){
-        classInformationManager.init();
-        ClassInformation ciTemp = new ClassInformation("CSE 219", "Learn design patterns and create a project" ,"Richard McKenna" ,"Spring 2017" ,"CSE 214" ,"James Hoffman");
-        classInformationManager.addData(ciTemp);
-        classInformationManager.closeConnection();
-    }
     public void addUser(User user){
         userManager.init();
         userManager.addData(user);
@@ -53,6 +48,16 @@ public class Controller {
         classInformationManager.init();
         classInformationManager.addData(classInformation);
         classInformationManager.closeConnection();
+    }
+
+    public void addUserToClass(User user, String course){
+        classParticipantManager.init();
+                ClassParticipant participant = new ClassParticipant(course,
+                user.getUsername(),
+                user.getMajor(),
+                user.getYear());
+        classParticipantManager.addData(participant);
+        classParticipantManager.closeConnection();
     }
 
     /**
@@ -127,8 +132,11 @@ public class Controller {
      */
     public ClassInformation[] retrieveClasses(String username){
         classInformationManager.init();
-        ClassInformation[] a = classInformationManager.retrieveClasses(username);
+        ClassInformation[] a = classInformationManager.retrieveClasses(username,true, false);
         classInformationManager.closeConnection();
+
+        classParticipantManager.init();
+        //ClassInformation[] b = classParticipantManager.
         return a;
     }
     /**

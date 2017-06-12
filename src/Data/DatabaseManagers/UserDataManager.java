@@ -63,7 +63,7 @@ public class UserDataManager extends DataManager {
     }
 
     /**
-     * another useless comment 
+     * another useless comment
      * @param username
      * @return
      */
