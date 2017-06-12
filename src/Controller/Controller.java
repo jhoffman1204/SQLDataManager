@@ -144,10 +144,24 @@ public class Controller {
         //ClassInformation[] b = classParticipantManager.
         return a;
     }
+
+    /**
+     * Returns all the User Objects that are in a class
+     * @param classname: the name of the class
+     * @return a User[] array which contains all of the user objects
+     */
+    public User[] getParticipantsOfClass(String classname){
+        classParticipantManager.init();
+        userManager.init();
+        String[] usernames = classParticipantManager.getParticipantsUsernames(classname);
+        User[] userObjects = userManager.retrieveArrayOfUsers(usernames);
+        classParticipantManager.closeConnection();
+        userManager.closeConnection();
+        return userObjects;
+    }
     /**
      * Getter and Setter methods
      */
-
     public FiniteStateMachine getFsm(){
         return this.fsm;
     }

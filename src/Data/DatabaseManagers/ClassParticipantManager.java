@@ -107,8 +107,15 @@ public class ClassParticipantManager extends DataManager {
         }
         return null;
     }
-    public String[] getParticipantsUsernames(String classname, Controller controller){
+
+    /**
+     * Takes in a class name and return a String array of all the participants that are in that class
+     * @param classname
+     * @return
+     */
+    public String[] getParticipantsUsernames(String classname){
         String[] participants = new String[100];
+        int participantsCounter = 0;
         try {
             Statement st = conn.createStatement();
             String sql = ("SELECT * FROM classparticipants;");
@@ -116,15 +123,14 @@ public class ClassParticipantManager extends DataManager {
 
             while (rs.next()) {
                 if(classname.equalsIgnoreCase(rs.getString(1))) {
-                    // if the user name matches then searches for the class with the specified class name
-
+                    participants[participantsCounter] = rs.getString(2);
+                    participantsCounter++;
                 }
             }
         }
         catch(Exception e){
             e.printStackTrace();
         }
-
         return participants;
     }
 }

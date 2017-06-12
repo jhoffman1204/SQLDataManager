@@ -96,4 +96,16 @@ public class UserDataManager extends DataManager {
         }
         return null;
     }
+    public User[] retrieveArrayOfUsers(String usernames[]){
+        User[] users = new User[30];
+        int userCounter = 0;
+        for(int i = 0; i < usernames.length; i++){
+            if(usernames[i] != null){
+                User temp = retrieveData(usernames[i]);
+                users[userCounter] = temp;
+                userCounter++;
+            }
+        }
+        return users;
+    }
 }
