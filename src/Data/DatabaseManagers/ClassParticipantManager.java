@@ -68,6 +68,7 @@ public class ClassParticipantManager extends DataManager {
                     ClassInformation a = controller.searchForClass(rs.getString(1));
                     if(a != null){
                         classes[counter] = a;
+                        counter++;
                         System.out.println(rs.getString(1) + " added");
                     }
                 }
@@ -78,8 +79,52 @@ public class ClassParticipantManager extends DataManager {
         }
         return classes;
     }
+
+    /**
+     * This method will return a ClassParticipant object from the username specified
+     * @param username
+     * @return
+     */
     @Override
-    public User retrieveData(String username) {
+    public ClassParticipant retrieveData(String username) {
+        ClassParticipant temp = new ClassParticipant();
+        try {
+            Statement st = conn.createStatement();
+            String sql = ("SELECT * FROM classparticipants;");
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                if(username.equalsIgnoreCase(rs.getString(1))) {
+                    temp.setClassName(rs.getString(1));
+                    temp.setUsername(rs.getString(2));
+                    temp.setMajor(rs.getString(3));
+                    temp.setYear(rs.getString(4));
+                    return temp;
+                }
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
         return null;
+    }
+    public String[] getParticipantsUsernames(String classname, Controller controller){
+        String[] participants = new String[100];
+        try {
+            Statement st = conn.createStatement();
+            String sql = ("SELECT * FROM classparticipants;");
+            ResultSet rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                if(classname.equalsIgnoreCase(rs.getString(1))) {
+                    // if the user name matches then searches for the class with the specified class name
+
+                }
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return participants;
     }
 }

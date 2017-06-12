@@ -40,14 +40,13 @@ public class ClassPageController {
         classSelectPane.getChildren().add(participantLabel);
         for(int i = 0; i < 30; i++){
             if(participatingClasses[i] != null){
-                System.out.println("partipant in array found");
                 ClassInformation temp  = participatingClasses[i];
                 Button button = new Button(participatingClasses[i].getClass_name() + " : " + participatingClasses[i].getProfessor());
                 button.setMinSize(475,100);
                 button.setMaxSize(475,100);
+                System.out.println(participatingClasses[i].getClass_name() + " added");
                 classSelectPane.getChildren().add(button);
                 button.setOnAction(event -> {
-                    mainPane.getChildren().clear();
                     Label description = new Label("Description: " + temp.getDescription());
                     Label professor = new Label("Professor: " + temp.getProfessor());
                     Label semester = new Label("Semester: "  + temp.getSemester());
@@ -55,6 +54,8 @@ public class ClassPageController {
                     mainPane.getChildren().add(professor);
                     mainPane.getChildren().add(semester);
                     currentClassSelected = temp.getClass_name();
+                    manager.getController().setState(FiniteStateMachine.VIEW_CLASS_AS_ADMIN);
+                    manager.updateMenuBarState();
                 });
             }
         }
@@ -77,7 +78,8 @@ public class ClassPageController {
                     mainPane.getChildren().add(professor);
                     mainPane.getChildren().add(semester);
                     currentClassSelected = temp.getClass_name();
-
+                    manager.getController().setState(FiniteStateMachine.VIEW_CLASS_AS_ADMIN);
+                    manager.updateMenuBarState();
                 });
             }
         }
@@ -109,6 +111,12 @@ public class ClassPageController {
                 System.out.println("That user does not exist");
             }
         });
+    }
+    public VBox createParticipantsPane(){
+        VBox participantsPane = new VBox();
+
+
+        return participantsPane;
     }
     public void clearPage(){
         this.mainPane.getChildren().clear();

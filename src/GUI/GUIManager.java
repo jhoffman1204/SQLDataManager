@@ -138,8 +138,6 @@ public class GUIManager extends Application {
             ClassInformation[] participantClasses = controller.retrieveCoursesTakenByStudent(this.currentUser);
             System.out.println(participantClasses[0]);
             setAsBodyPane(classPage.createClassesPane(controller.getCurrentUser().getUsername(), classes, participantClasses));
-            controller.setState(FiniteStateMachine.VIEW_CLASS_AS_ADMIN);
-            updateMenuBarState();
         });
         menuButtons[7] = viewClasses;
 
