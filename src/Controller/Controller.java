@@ -83,7 +83,12 @@ public class Controller {
             return false;
         }
     }
-
+    public ClassInformation[] retrieveCoursesTakenByStudent(String username){
+        classParticipantManager.init();
+        ClassInformation[] a = classParticipantManager.retrieveClassesFromUser(username,this);
+        classParticipantManager.closeConnection();
+        return a;
+    }
     public User searchForUser(String username){
         userManager.init();
         User temp = userManager.retrieveData(username);

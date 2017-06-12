@@ -1,11 +1,15 @@
 package Data.DatabaseManagers;
 
+import Controller.Controller;
+import Data.DataObjects.ClassInformation;
 import Data.DataObjects.ClassParticipant;
 import Data.DataManager;
 import Data.DataObjects.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 /**
  * Created by James on 5/26/2017.
@@ -45,7 +49,35 @@ public class ClassParticipantManager extends DataManager {
             e.printStackTrace();
         }
     }
+    /**
+     * returns a string with the names of the classes that a user is in
+     **/
+    public ClassInformation[] retrieveClassesFromUser(String username, Controller controller){
+        ClassInformation[] classes = new ClassInformation[30];
+        int counter = 0;
 
+        try {
+            String compareString = username;
+            Statement st = conn.createStatement();
+            String sql = ("SELECT * FROM classparticipants;");
+            ResultSet rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                if(username.equalsIgnoreCase(rs.getString(2))) {
+                    // if the user name matches then searches for the class with the specified class name
+                    ClassInformation a = controller.searchForClass(rs.getString(1));
+                    if(a != null){
+                        classes[counter] = a;
+                        System.out.println(rs.getString(1) + " added");
+                    }
+                }
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return classes;
+    }
     @Override
     public User retrieveData(String username) {
         return null;

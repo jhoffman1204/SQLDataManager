@@ -69,7 +69,7 @@ public class ClassInformationManager extends DataManager {
         }
         return null;
     }
-    public ClassInformation[] retrieveClasses(String username, boolean admin, boolean participant){
+    public ClassInformation[] retrieveClasses(String username, boolean admin, boolean className){
         ClassInformation temp = new ClassInformation();
         String usernametemp = username;
         ClassInformation[] classes = new ClassInformation[30];
@@ -83,6 +83,9 @@ public class ClassInformationManager extends DataManager {
             while (rs.next()) {
                 if(admin) {
                     compareString = rs.getString(6);
+                }
+                else if(className){
+                    compareString = rs.getString(1);
                 }
                 if(username.equalsIgnoreCase(compareString)) {
                     ClassInformation temp2 = new ClassInformation();

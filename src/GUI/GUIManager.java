@@ -135,7 +135,8 @@ public class GUIManager extends Application {
         Button viewClasses = new Button("View Classes");
         viewClasses.setOnAction(event -> {
             ClassInformation[] classes = controller.retrieveClasses(this.currentUser);
-            ClassInformation[] participantClasses = new ClassInformation[5];
+            ClassInformation[] participantClasses = controller.retrieveCoursesTakenByStudent(this.currentUser);
+            System.out.println(participantClasses[0]);
             setAsBodyPane(classPage.createClassesPane(controller.getCurrentUser().getUsername(), classes, participantClasses));
             controller.setState(FiniteStateMachine.VIEW_CLASS_AS_ADMIN);
             updateMenuBarState();
@@ -145,7 +146,7 @@ public class GUIManager extends Application {
         Button addUser = new Button("Add User to Class");
         addUser.setOnAction(event -> {
             classPage.clearPage();
-            classPage.createaddUserPane(this.currentUser);
+            classPage.createaddUserPane(this.currentClass);
         });
         menuButtons[8] = addUser;
 
