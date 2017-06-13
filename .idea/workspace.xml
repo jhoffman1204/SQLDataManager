@@ -7,10 +7,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="704706f0-6512-4e81-a32a-50d7ca5e542d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/artifacts/SQLDataManager_jar.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GUI/GUIManager.java" afterPath="$PROJECT_DIR$/src/GUI/GUIManager.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/compile.jsmooth" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CodeDash.exe" afterPath="$PROJECT_DIR$/CodeDash.exe" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Data/DataManager.java" afterPath="$PROJECT_DIR$/src/Data/DataManager.java" />
     </list>
     <ignored path="SQLDataManager.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -34,7 +33,7 @@
       <file leaf-file-name="Controller.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Controller/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="877">
+            <state relative-caret-position="5880">
               <caret line="158" column="38" lean-forward="false" selection-start-line="158" selection-start-column="38" selection-end-line="158" selection-end-column="38" />
               <folding />
             </state>
@@ -63,16 +62,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FiniteStateMachine.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/FSM/FiniteStateMachine.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="880">
-              <caret line="22" column="65" lean-forward="false" selection-start-line="22" selection-start-column="65" selection-end-line="22" selection-end-column="65" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="GUIManager.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GUI/GUIManager.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -83,6 +72,16 @@
                 <element signature="e#22798#22799#0" expanded="true" />
                 <element signature="e#22836#22837#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DataManager.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Data/DataManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1360">
+              <caret line="34" column="71" lean-forward="false" selection-start-line="34" selection-start-column="71" selection-end-line="34" selection-end-column="71" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -111,7 +110,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MANIFEST.MF" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MANIFEST.MF" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/META-INF/MANIFEST.MF">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
@@ -155,10 +154,10 @@
       <find>login</find>
       <find>adduser</find>
       <find>admin</find>
-      <find>added</find>
       <find>VIEW_CLASS</find>
       <find>currentclassselect</find>
       <find>class</find>
+      <find>added</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -202,7 +201,6 @@
         <option value="$PROJECT_DIR$/src/Data/DataObjects/Message.java" />
         <option value="$PROJECT_DIR$/src/Data/DatabaseManagers/MessageManager.java" />
         <option value="$PROJECT_DIR$/src/main.java" />
-        <option value="$PROJECT_DIR$/src/Data/DataManager.java" />
         <option value="$PROJECT_DIR$/src/GUI/ClassGUI/ClassGUI.java" />
         <option value="$PROJECT_DIR$/src/GUI/ClassGUI/ClassPageSingleton.java" />
         <option value="$PROJECT_DIR$/src/Data/DatabaseManagers/ClassInformationManager.java" />
@@ -211,6 +209,7 @@
         <option value="$PROJECT_DIR$/src/Data/DatabaseManagers/ClassParticipantManager.java" />
         <option value="$PROJECT_DIR$/src/GUI/GUIManager.java" />
         <option value="$PROJECT_DIR$/src/GUI/ClassGUI/ClassPageController.java" />
+        <option value="$PROJECT_DIR$/src/Data/DataManager.java" />
       </list>
     </option>
   </component>
@@ -749,7 +748,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-16" y="-16" width="3872" height="2092" extended-state="7" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -760,7 +758,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26735356" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26735356" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1116,14 +1114,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/PaneGenerator.java" />
-    <entry file="file://$PROJECT_DIR$/src/Data/DataManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1360">
-          <caret line="34" column="66" lean-forward="false" selection-start-line="34" selection-start-column="66" selection-end-line="34" selection-end-column="66" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/FSM/FiniteStateMachine.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="880">
@@ -1152,14 +1142,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="366">
           <caret line="73" column="0" lean-forward="false" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="877">
-          <caret line="158" column="38" lean-forward="false" selection-start-line="158" selection-start-column="38" selection-end-line="158" selection-end-column="38" />
           <folding />
         </state>
       </provider>
@@ -1210,6 +1192,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="21" lean-forward="true" selection-start-line="0" selection-start-column="21" selection-end-line="0" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5880">
+          <caret line="158" column="38" lean-forward="false" selection-start-line="158" selection-start-column="38" selection-end-line="158" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Data/DataManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1360">
+          <caret line="34" column="71" lean-forward="false" selection-start-line="34" selection-start-column="71" selection-end-line="34" selection-end-column="71" />
           <folding />
         </state>
       </provider>
