@@ -7,7 +7,6 @@ import Data.DataObjects.Message;
 import Data.DataObjects.User;
 import FSM.FiniteStateMachine;
 import GUI.ClassGUI.ClassPageController;
-import GUI.ClassGUI.ClassPageController;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -36,7 +35,7 @@ public class GUIManager extends Application {
     Node[] menuButtons = new Node[9];
     String currentUser;
     String currentViewingUser;
-    String currentClass;
+    String selectedClass;
     Button viewMessages;
 
     ClassPageController classPage;
@@ -138,13 +137,14 @@ public class GUIManager extends Application {
             ClassInformation[] participantClasses = controller.retrieveCoursesTakenByStudent(this.currentUser);
             System.out.println(participantClasses[0]);
             setAsBodyPane(classPage.createClassesPane(controller.getCurrentUser().getUsername(), classes, participantClasses));
+
         });
         menuButtons[7] = viewClasses;
 
         Button addUser = new Button("Add User to Class");
         addUser.setOnAction(event -> {
             classPage.clearPage();
-            classPage.createaddUserPane(this.currentClass);
+            classPage.createaddUserPane(this.selectedClass);
         });
         menuButtons[8] = addUser;
 
@@ -540,8 +540,8 @@ public class GUIManager extends Application {
 
         return createNewClassForm;
     }
-    public void setCurrentClass(String currentClass){
-        this.currentClass = currentClass;
+    public void setSelectedClass(String selectedClass){
+        this.selectedClass = selectedClass;
     }
     public Controller getController(){
         return this.controller;

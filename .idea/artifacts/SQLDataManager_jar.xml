@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SQLDataManager:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SQLDataManager_jar</output-path>
+    <root id="archive" name="SQLDataManager.jar">
+      <element id="module-output" name="SQLDataManager" />
+      <element id="artifact" artifact-name="mysql-connector-java-6_0_6_jar_" />
+    </root>
+  </artifact>
+</component>
