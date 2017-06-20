@@ -6,7 +6,9 @@ import Data.DataObjects.ClassInformation;
 import Data.DataObjects.Message;
 import Data.DataObjects.User;
 import FSM.FiniteStateMachine;
-import GUI.ClassGUI.ClassPageController;
+import GUI.ClassGUI.ClassPage;
+import GUI.ClassGUI.HomePage;
+import GUI.ClassGUI.UserPage;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -38,7 +40,9 @@ public class GUIManager extends Application {
     String selectedClass;
     Button viewMessages;
 
-    ClassPageController classPage;
+    ClassPage classPage;
+    UserPage userPage;
+    HomePage home;
 
     @Override
     public void start(Stage primaryStage) {
@@ -58,14 +62,23 @@ public class GUIManager extends Application {
         pageSpeicificOptionBar.setStyle("-fx-border-color: black;-fx-border-width: 7px;");
         this.initializeMenuBar();
         root.getChildren().add(menuBar);
+
+        menuBar.setMinHeight(primaryStage.getY() / 6);
+        menuBar.setMinWidth(primaryStage.getX());
+        //menuBar.setStyle("-fx-background-color: #797D7F");
+
         root.getChildren().add(mainPage);
         mainPage.getChildren().add(pageSpeicificOptionBar);
         root.setMargin(mainPage, new Insets(30,0,0,0));
         this.controller.getFsm().setState(FiniteStateMachine.LOGGED_OUT_STATE);
         this.updateMenuBarState();
 
-        primaryStage.setScene(new Scene(root, 1200, 800));
+        primaryStage.setScene(new Scene(root, 1800, 1200));
+        primaryStage.setMaximized(true);
         primaryStage.show();
+
+
+        setAsBodyPane(home.generateHomeScreen());
     }
 
     /**
@@ -73,7 +86,9 @@ public class GUIManager extends Application {
      */
     public void init(){
         controller = new Controller();
-        classPage  = new ClassPageController(this);
+        classPage  = new ClassPage(this);
+        home = new HomePage(this);
+        userPage = new UserPage(this);
         controller.init(this);
     }
     public void setController(Controller controller){
@@ -223,6 +238,10 @@ public class GUIManager extends Application {
         pane.getChildren().add(submit);
         return pane;
     }
+    public void setSize(Pane pane, int height, int width){
+        pane.setMaxSize(width,height);
+        pane.setMinSize(width,height);
+    }
     /**
      * Clears the current body pane and adds the new parameter pane
      * @param pane: Generic Pane so it can be a HBox, GridPane etc.
@@ -231,11 +250,9 @@ public class GUIManager extends Application {
         mainPage.getChildren().remove(currenBodyPane);
         mainPage.getChildren().add(pane);
         mainPage.setMargin(pane, new Insets(100,0,0,200));
-        pane.setMaxSize(500,500);
-        pane.setMinSize(500,500);
-        pane.setStyle("-fx-border-color: black;-fx-border-width: 7px;");
+        pane.setMaxSize(800,500);
+        pane.setMinSize(800,500);
         currenBodyPane = pane;
-        menuBar.setStyle("-fx-border-color: black;-fx-border-width: 2px;");
     }
 
     /**
@@ -254,7 +271,7 @@ public class GUIManager extends Application {
             User temp = controller.searchForUser(searchField.getText());
             if(temp != null){
                 controller.getFsm().setState(FiniteStateMachine.VIEW_USER_STATE);
-                setAsBodyPane(createUserPage(temp));
+                setAsBodyPane(userPage.generateUserPage(temp));
                 updateMenuBarState();
                 currentViewingUser = temp.getUsername();
             }
@@ -272,27 +289,6 @@ public class GUIManager extends Application {
         homescreen.add(label,0,0);
 
         return homescreen;
-    }
-    public GridPane createUserPage(User user){
-        GridPane userPage = new GridPane();
-
-        Label userNameLabel = new Label("UserName: " + user.getUsername());
-        Label majorLabel  = new Label("Major: " + user.getMajor());
-        Label yearLabel = new Label("Year: " + user.getYear());
-        Label gitLabel = new Label("Git: " + user.getGit());
-        Label website = new Label("Website: " + user.getWebsite());
-        Label courses = new Label("Courses: " + user.getCourses());
-        Label email  = new Label("Email: " + user.getEmail());
-
-        userPage.add(userNameLabel ,0,0);
-        userPage.add(majorLabel    ,0,1);
-        userPage.add(yearLabel     ,0,2);
-        userPage.add(gitLabel      ,0,3);
-        userPage.add(website       ,0,4);
-        userPage.add(courses       ,0,5);
-        userPage.add(email         ,0,6);
-
-        return userPage;
     }
     public GridPane createClassPage(ClassInformation classInformation){
         GridPane classPage = new GridPane();
@@ -345,7 +341,7 @@ public class GUIManager extends Application {
                 password.clear();
                 controller.getFsm().setState(FiniteStateMachine.LOGGED_IN_STATE);
                 updateMenuBarState();
-                setAsBodyPane(createUserPage(controller.getCurrentUser()));
+                setAsBodyPane(userPage.generateUserPage(controller.getCurrentUser()));
                 this.currentUser = controller.getCurrentUser().getUsername();
             }
             else{
@@ -460,7 +456,7 @@ public class GUIManager extends Application {
                 emailTextField.clear();
                 controller.getFsm().setState(FiniteStateMachine.LOGGED_IN_STATE);
                 updateMenuBarState();
-                setAsBodyPane(createUserPage(controller.getCurrentUser()));
+                setAsBodyPane(userPage.generateUserPage(controller.getCurrentUser()));
             }
         });
         signupForm.add(submitNewUser    ,0,10);

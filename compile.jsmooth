@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<jsmoothproject>
+<JVMSearchPath>registry</JVMSearchPath>
+<JVMSearchPath>javahome</JVMSearchPath>
+<JVMSearchPath>jrepath</JVMSearchPath>
+<JVMSearchPath>jdkpath</JVMSearchPath>
+<JVMSearchPath>exepath</JVMSearchPath>
+<JVMSearchPath>jview</JVMSearchPath>
+<arguments></arguments>
+<classPath>..\Documents\Coding Projects\SQLDataManager</classPath>
+<classPath>..\Documents\Coding Projects\SQLDataManager\mysql-connector-java-6.0.6.jar</classPath>
+<currentDirectory>..\Documents\Coding Projects\SQLDataManager</currentDirectory>
+<embeddedJar>true</embeddedJar>
+<executableName>CodeDash.exe</executableName>
+<iconLocation>..\Pictures\icon\7706630600b07c33817f05874ca1d93c.png</iconLocation>
+<initialMemoryHeap>62914560</initialMemoryHeap>
+<jarLocation>..\Documents\Coding Projects\SQLDataManager\out\artifacts\SQLDataManager_jar\SQLDataManager.jar</jarLocation>
+<mainClassName>main</mainClassName>
+<maximumMemoryHeap>629145600</maximumMemoryHeap>
+<maximumVersion></maximumVersion>
+<minimumVersion>1.6</minimumVersion>
+<skeletonName>Console Wrapper</skeletonName>
+<skeletonProperties>
+<key>Message</key>
+<value>Java has not been found on your computer. Do you want to download it?</value>
+</skeletonProperties>
+<skeletonProperties>
+<key>PressKey</key>
+<value>0</value>
+</skeletonProperties>
+<skeletonProperties>
+<key>Debug</key>
+<value>0</value>
+</skeletonProperties>
+</jsmoothproject>

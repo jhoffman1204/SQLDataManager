@@ -21,6 +21,7 @@ public class FiniteStateMachine {
     public static final String LOGGED_IN_STATE      = "010110110";
     public static final String VIEW_USER_STATE      = "010112110";
     public static final String VIEW_CLASS_AS_ADMIN  = "010110112";
+    public static final String VIEW_CLASS_AS_USER   = "010110110";
     private String currentState;
     public void init(){
 

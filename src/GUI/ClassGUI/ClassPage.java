@@ -15,12 +15,12 @@ import javafx.scene.layout.VBox;
 /**
  * Created by James on 6/9/2017.
  */
-public class ClassPageController {
+public class ClassPage {
     private VBox mainPane;
     GUIManager manager;
     String currentClassSelected;
 
-    public ClassPageController(GUIManager manager){
+    public ClassPage(GUIManager manager){
         mainPane = new VBox();
         this.manager = manager;
     }
@@ -58,7 +58,7 @@ public class ClassPageController {
                     Label classParticiapntsLabel = new Label("Class Participants: ");
                     mainPane.getChildren().add(classParticiapntsLabel);
                     mainPane.getChildren().add(this.createParticipantsPane(currentClassSelected));
-                    manager.getController().setState(FiniteStateMachine.VIEW_CLASS_AS_ADMIN);
+                    manager.getController().setState(FiniteStateMachine.VIEW_CLASS_AS_USER);
                     manager.updateMenuBarState();
                 });
             }
@@ -101,6 +101,7 @@ public class ClassPageController {
         fields.add(userNameLabel,0,0);
         fields.add(userNameTextField,1,0);
         fields.add(submitButton,0,1);
+
 
         addUserPane.getChildren().add(fields);
 
