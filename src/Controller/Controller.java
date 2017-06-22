@@ -1,13 +1,7 @@
 package Controller;
 
-import Data.DataObjects.ClassInformation;
-import Data.DataObjects.ClassParticipant;
-import Data.DataObjects.Message;
-import Data.DataObjects.User;
-import Data.DatabaseManagers.ClassInformationManager;
-import Data.DatabaseManagers.ClassParticipantManager;
-import Data.DatabaseManagers.MessageManager;
-import Data.DatabaseManagers.UserDataManager;
+import Data.DataObjects.*;
+import Data.DatabaseManagers.*;
 import FSM.FiniteStateMachine;
 import GUI.GUIManager;
 
@@ -20,9 +14,11 @@ public class Controller {
     ClassParticipantManager classParticipantManager;
     ClassInformationManager classInformationManager;
     MessageManager messageManager;
+    MicropostManager micropostManager;
     FiniteStateMachine fsm;
     GUIManager guiManager;
     User currentUser;
+
     /**
      * This class is initialized by the GUI.GUIManager and the main instance will be accessed from there
      */
@@ -31,6 +27,7 @@ public class Controller {
         classParticipantManager = new ClassParticipantManager();
         classInformationManager = new ClassInformationManager();
         messageManager = new MessageManager();
+        micropostManager = new MicropostManager();
         fsm = new FiniteStateMachine();
         fsm.init();
         this.guiManager = guiManager;
@@ -129,6 +126,17 @@ public class Controller {
         messageManager.closeConnection();
         return a;
     }
+    public void postMicroPost(Micropost micropost){
+        micropostManager.init();
+        micropostManager.addData(micropost);
+        micropostManager.closeConnection();
+    }
+    public Micropost[] retrievePosts(String username){
+        micropostManager.init();
+        Micropost[] a = (Micropost[]) micropostManager.retrieveData(username);
+        micropostManager.closeConnection();
+        return a;
+    }
 
     /**
      * Retrieves class that a user is the admin of
@@ -167,6 +175,9 @@ public class Controller {
     }
     public User getCurrentUser(){
         return this.currentUser;
+    }
+    public void setCurrentUser(User user){
+        this.currentUser = user;
     }
     public void setState(String state)
     {

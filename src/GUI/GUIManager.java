@@ -79,6 +79,7 @@ public class GUIManager extends Application {
 
 
         setAsBodyPane(home.generateHomeScreen());
+        //testMethod();
     }
 
     /**
@@ -90,6 +91,14 @@ public class GUIManager extends Application {
         home = new HomePage(this);
         userPage = new UserPage(this);
         controller.init(this);
+    }
+    public void testMethod(){
+        User testUser = new User("james","hoffman","jhoffman1204","hoffman96","CSE","Junior","git@exampl",
+                "jamesuhoffman.com","courses","jhoffman1204@gmail.com");
+        setAsBodyPane(userPage.generateUserPage(testUser));
+        this.currentUser = "jhoffman1204";
+        controller.setCurrentUser(testUser);
+
     }
     public void setController(Controller controller){
         this.controller = controller;
@@ -164,6 +173,9 @@ public class GUIManager extends Application {
         menuButtons[8] = addUser;
 
 
+    }
+    public String getCurrentUser(){
+        return this.currentUser;
     }
     public HBox createInbox(){
         HBox pane = new HBox();

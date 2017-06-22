@@ -64,7 +64,7 @@ public class MessageManager extends DataManager {
         catch(Exception e){
             e.printStackTrace();
         }
-        return messageCounter;
+        return temp;
     }
     public Message[] retrieveMessages(String key) {
         Message temp = new Message();
