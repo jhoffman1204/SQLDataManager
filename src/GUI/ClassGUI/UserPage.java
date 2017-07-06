@@ -103,6 +103,7 @@ public class UserPage {
             micropost.setTitle(titleData);
             micropost.setPost(postData);
             micropost.setUser(userData);
+            System.out.println(micropost.getUser());
 
             guimanager.getController().postMicroPost(micropost);
             guimanager.setAsBodyPane(generateUserPage(guimanager.getController().getCurrentUser()));
@@ -126,7 +127,9 @@ public class UserPage {
     public ScrollPane createMicroPostDisplayPane(){
         VBox pane = new VBox();
 
-        Micropost[] a = guimanager.getController().retrievePosts("jhoffman1204");
+        //Micropost[] a = guimanager.getController().retrievePosts(guimanager.getCurrentViewingUser());
+        Micropost[] a = guimanager.getController().retrievePosts(guimanager.getCurrentViewingUser());
+        //fSystem.out.println(guimanager.getCurrentViewingUser());
         for(int i = 0; i < a.length; i++){
             if(a[i]!= null) {
                 pane.getChildren().add(createPostPane(a[i].getPost(),a[i].getTitle()));

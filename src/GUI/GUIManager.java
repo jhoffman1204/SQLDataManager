@@ -159,7 +159,7 @@ public class GUIManager extends Application {
         viewClasses.setOnAction(event -> {
             ClassInformation[] classes = controller.retrieveClasses(this.currentUser);
             ClassInformation[] participantClasses = controller.retrieveCoursesTakenByStudent(this.currentUser);
-            System.out.println(participantClasses[0]);
+            //System.out.println(participantClasses[0]);
             setAsBodyPane(classPage.createClassesPane(controller.getCurrentUser().getUsername(), classes, participantClasses));
 
         });
@@ -177,6 +177,17 @@ public class GUIManager extends Application {
     public String getCurrentUser(){
         return this.currentUser;
     }
+    public void setCurrentUser(String currentUser){
+        this.currentUser = currentUser;
+    }
+    public String getCurrentViewingUser() {
+        return currentViewingUser;
+    }
+
+    public void setCurrentViewingUser(String currentViewingUser) {
+        this.currentViewingUser = currentViewingUser;
+    }
+
     public HBox createInbox(){
         HBox pane = new HBox();
         VBox subjects = new VBox();
@@ -187,6 +198,7 @@ public class GUIManager extends Application {
         Label sender  = new Label("Sent by: ");
 
         Message[] messages = controller.retrieveMessages(controller.getCurrentUser().getUsername());
+        System.out.println("the current user is: " + controller.getCurrentUser().getUsername());
         for(int i = 0; i < messages.length; i++){
             if(messages[i] != null) {
                 Button button = new Button(messages[i].getSubject());
@@ -243,6 +255,7 @@ public class GUIManager extends Application {
         Button submit = new Button("Send");
         submit.setOnAction(event -> {
             controller.sendMessage(currentViewingUser, subjectField.getText(), bodyField.getText());
+            System.out.println("current viewing user " + currentViewingUser);
             subjectField.clear();
             bodyField.clear();
             viewUserLabel.setText("Data.DataObjects.Message Sent!");
@@ -283,9 +296,10 @@ public class GUIManager extends Application {
             User temp = controller.searchForUser(searchField.getText());
             if(temp != null){
                 controller.getFsm().setState(FiniteStateMachine.VIEW_USER_STATE);
+                currentViewingUser = temp.getUsername();
                 setAsBodyPane(userPage.generateUserPage(temp));
                 updateMenuBarState();
-                currentViewingUser = temp.getUsername();
+                //System.out.println("current viewing user is " + temp.getUsername());
             }
             ClassInformation classInformation = controller.searchForClass(searchField.getText());
             if(classInformation != null){
@@ -346,6 +360,10 @@ public class GUIManager extends Application {
                 if(successLabel != null) {
                     successLabel.setText("");
                 }
+                controller.setCurrentUser(controller.retrieveUser(usernameOrEmail.getText()));
+                System.out.println("controllers's current user is " + controller.getCurrentUser().getUsername());
+                currentViewingUser = usernameOrEmail.getText();
+                //System.out.println("current viewing user is " + usernameOrEmail.getText());
                 successLabel = new Label("You have SuccessFully Logged In");
                 loginForm.add(successLabel,0,3);
                 loginForm.setMargin(successLabel,new Insets(15,0,0,0));
@@ -466,6 +484,8 @@ public class GUIManager extends Application {
                 websiteTextField.clear();
                 coursesTextField.clear();
                 emailTextField.clear();
+                setCurrentViewingUser(controller.getCurrentUser().getUsername());
+                setCurrentUser(controller.getCurrentUser().getUsername());
                 controller.getFsm().setState(FiniteStateMachine.LOGGED_IN_STATE);
                 updateMenuBarState();
                 setAsBodyPane(userPage.generateUserPage(controller.getCurrentUser()));
@@ -475,6 +495,9 @@ public class GUIManager extends Application {
 
 
         return signupForm;
+    }
+    public void setCurrentViewingUsers(String username){
+        this.currentViewingUser = username;
     }
     public GridPane addCreateNewClassForm(){
         GridPane createNewClassForm = new GridPane();

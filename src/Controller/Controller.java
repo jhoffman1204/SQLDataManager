@@ -5,6 +5,9 @@ import Data.DatabaseManagers.*;
 import FSM.FiniteStateMachine;
 import GUI.GUIManager;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 /**
  * Created by James on 5/25/2017.
  */
@@ -70,7 +73,7 @@ public class Controller {
             userManager.closeConnection();
             return false;
         }
-        if(temp.getPassword().equalsIgnoreCase(password)){
+        if(temp.getPassword().equalsIgnoreCase(encrpyPassword(password).substring(0,15))){
             currentUser = temp;
             System.out.println("You have successfully logged in");
             userManager.closeConnection();
@@ -79,6 +82,25 @@ public class Controller {
         else {
             return false;
         }
+    }
+    public String encrpyPassword(String password)
+    {
+        String pass = password;
+        StringBuffer sb = null;
+        try {
+            MessageDigest a = MessageDigest.getInstance("MD5");
+            a.update(password.getBytes());
+            byte[] b = a.digest();
+            sb= new StringBuffer();
+            for(byte b1 : b)
+            {
+                sb.append(Integer.toHexString(b1 & 0xff).toString());
+            }
+        }
+        catch(NoSuchAlgorithmException e) {
+            System.out.println("there was a problem with the Message Digest method");
+        }
+        return sb.toString();
     }
     public ClassInformation[] retrieveCoursesTakenByStudent(String username){
         classParticipantManager.init();
@@ -116,6 +138,7 @@ public class Controller {
     public void sendMessage(String desintationUser, String body, String message){
 
         Message newMessage = new Message(this.currentUser.getUsername(), desintationUser, body, message);
+        System.out.println(this.currentUser.getUsername());
         messageManager.init();
         messageManager.addData(newMessage);
         messageManager.closeConnection();
@@ -166,6 +189,13 @@ public class Controller {
         classParticipantManager.closeConnection();
         userManager.closeConnection();
         return userObjects;
+    }
+    public User retrieveUser(String username){
+        userManager.init();
+        User user = userManager.retrieveData(username);
+        userManager.closeConnection();
+        return user;
+
     }
     /**
      * Getter and Setter methods

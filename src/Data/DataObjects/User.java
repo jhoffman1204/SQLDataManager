@@ -1,5 +1,8 @@
 package Data.DataObjects;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 /**
  * Created by James on 5/25/2017.
  */
@@ -19,11 +22,30 @@ public class User {
     public User() {
 
     }
+    public String encrpyPassword(String password)
+    {
+        String pass = password;
+        StringBuffer sb = null;
+        try {
+            MessageDigest a = MessageDigest.getInstance("MD5");
+            a.update(password.getBytes());
+            byte[] b = a.digest();
+            sb= new StringBuffer();
+            for(byte b1 : b)
+            {
+                sb.append(Integer.toHexString(b1 & 0xff).toString());
+            }
+        }
+        catch(NoSuchAlgorithmException e) {
+            System.out.println("there was a problem with the Message Digest method");
+        }
+        return sb.toString();
+    }
     public User(String firstName, String lastName, String username, String password, String major, String year, String git, String website, String courses, String email){
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
-        this.password = password;
+        this.password = encrpyPassword(password).substring(0,15);
         this.major = major;
         this.year = year;
         this.git = git;
