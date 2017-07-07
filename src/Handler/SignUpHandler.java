@@ -1,14 +1,15 @@
 package Handler;
 
 import Controller.Controller;
+import Data.DataObjects.User;
 import FSM.FiniteStateMachine;
 import GUI.GUIManager;
 
 /**
  * Created by James Hoffman on 7/6/2017.
  */
-public class LoginHandler extends EventHandler{
-    public LoginHandler(GUIManager manager, Controller controller){
+public class SignUpHandler extends EventHandler {
+    public SignUpHandler(GUIManager manager, Controller controller){
         super(manager,controller);
     }
     @Override
@@ -19,10 +20,11 @@ public class LoginHandler extends EventHandler{
     public GUIManager getGuiManager(){
         return super.getGuiManager();
     }
-    public void handle(String username){
-        guiManager.setCurrentViewingUser(username);
-        guiManager.setCurrentUser(username);
-        controller.setCurrentUser(controller.retrieveUser(username));
+    public void handle(User user){
+        controller.addUser(user);
+        guiManager.setCurrentViewingUser(user.getUsername());
+        guiManager.setCurrentUser(user.getUsername());
+        controller.setCurrentUser(controller.retrieveUser(user.getUsername()));
         controller.getFsm().setState(FiniteStateMachine.LOGGED_IN_STATE);
         guiManager.updateMenuBarState();
     }

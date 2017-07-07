@@ -9,6 +9,8 @@ import FSM.FiniteStateMachine;
 import GUI.ClassGUI.ClassPage;
 import GUI.ClassGUI.HomePage;
 import GUI.ClassGUI.UserPage;
+import Handler.LoginHandler;
+import Handler.SignUpHandler;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -20,6 +22,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+
+import javax.security.auth.login.AppConfigurationEntry;
 
 
 public class GUIManager extends Application {
@@ -336,48 +340,29 @@ public class GUIManager extends Application {
         return classPage;
     }
     public GridPane createLoginForm(){
+        // Creating the login pane
         GridPane loginForm = new GridPane();
-
         TextField usernameOrEmail = new TextField();
         TextField password = new TextField();
-
         Label usernameOrEmailLabel = new Label("Username/Email:    ");
         Label passwordLabel = new Label("Password: ");
-
         loginForm.add(usernameOrEmailLabel,0,0);
         loginForm.add(passwordLabel,0,1);
         loginForm.add(usernameOrEmail,1,0);
         loginForm.add(password,1,1);
-
         loginForm.setMargin(usernameOrEmailLabel , new Insets(20,0,15,20));
         loginForm.setMargin(passwordLabel        , new Insets(20,0,15,20));
         loginForm.setMargin(usernameOrEmail      , new Insets(20,0,15,20));
         loginForm.setMargin(password             , new Insets(20,0,15,20));
-
         Button loginSubmit = new Button("Login");
         loginSubmit.setOnAction(event -> {
             if(controller.login(usernameOrEmail.getText(),password.getText()) == true){
-                if(successLabel != null) {
-                    successLabel.setText("");
-                }
-                controller.setCurrentUser(controller.retrieveUser(usernameOrEmail.getText()));
-                System.out.println("controllers's current user is " + controller.getCurrentUser().getUsername());
-                currentViewingUser = usernameOrEmail.getText();
-                //System.out.println("current viewing user is " + usernameOrEmail.getText());
-                successLabel = new Label("You have SuccessFully Logged In");
-                loginForm.add(successLabel,0,3);
-                loginForm.setMargin(successLabel,new Insets(15,0,0,0));
-                usernameOrEmail.clear();
-                password.clear();
-                controller.getFsm().setState(FiniteStateMachine.LOGGED_IN_STATE);
-                updateMenuBarState();
+                LoginHandler loginHandler = new LoginHandler(this,controller);
+                loginHandler.handle(usernameOrEmail.getText());
                 setAsBodyPane(userPage.generateUserPage(controller.getCurrentUser()));
                 this.currentUser = controller.getCurrentUser().getUsername();
             }
             else{
-                if(successLabel != null) {
-                    successLabel.setText("");
-                }
                 successLabel = new Label("Incorrect Username/Password");
                 loginForm.add(successLabel,0,3);
                 loginForm.setMargin(successLabel,new Insets(15,0,0,0));
@@ -461,9 +446,7 @@ public class GUIManager extends Application {
 
         Button submitNewUser = new Button();
         submitNewUser.setText("Submit");
-        submitNewUser.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
+        submitNewUser.setOnAction(event -> {
                 User user = new User(firstNameTextField.getText(),
                         lastNameTextField.getText(),
                         usernameTextField.getText(),
@@ -474,7 +457,6 @@ public class GUIManager extends Application {
                         websiteTextField.getText(),
                         coursesTextField.getText(),
                         emailTextField.getText());
-                controller.addUser(user);
                 firstNameTextField.clear();
                 lastNameTextField.clear();
                 passwordTextField.clear();
@@ -484,13 +466,13 @@ public class GUIManager extends Application {
                 websiteTextField.clear();
                 coursesTextField.clear();
                 emailTextField.clear();
-                setCurrentViewingUser(controller.getCurrentUser().getUsername());
-                setCurrentUser(controller.getCurrentUser().getUsername());
-                controller.getFsm().setState(FiniteStateMachine.LOGGED_IN_STATE);
-                updateMenuBarState();
                 setAsBodyPane(userPage.generateUserPage(controller.getCurrentUser()));
-            }
+
+                SignUpHandler handler = new SignUpHandler(this,controller);
+                handler.handle(user);
+
         });
+
         signupForm.add(submitNewUser    ,0,10);
 
 
