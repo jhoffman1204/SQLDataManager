@@ -9,6 +9,8 @@ import FSM.FiniteStateMachine;
 import GUI.ClassGUI.ClassPage;
 import GUI.ClassGUI.HomePage;
 import GUI.ClassGUI.UserPage;
+import GUI.MenuBar.MenuBar;
+import GUI.MenuBar.PageSpecificMenuBar;
 import Handler.LoginHandler;
 import Handler.SignUpHandler;
 import javafx.application.Application;
@@ -28,15 +30,12 @@ import javax.security.auth.login.AppConfigurationEntry;
 
 public class GUIManager extends Application {
 
-    private String state;
     Controller controller;
     StackPane root;
-    // sets the main focus pane to be generic so that it is easy to remove and swap for other
     Pane currenBodyPane;
     HBox menuBar;
     HBox mainPage = new HBox();
     VBox pageSpeicificOptionBar;
-    VBox leftMenuBar = new VBox();
     Label successLabel;
     Node[] menuButtons = new Node[9];
     String currentUser;
@@ -47,43 +46,26 @@ public class GUIManager extends Application {
     ClassPage classPage;
     UserPage userPage;
     HomePage home;
+    MenuBar taskBar;
 
     @Override
     public void start(Stage primaryStage) {
         this.init();
+        taskBar.init(this.controller,this);
+        controller.init(this);
         primaryStage.setTitle("Code Dash");
-        Controller controller;
-        // root contains the menuBar and the mainPage
-        // mainPage contains the pageSpecificOptionbar and the currentBodyPane
-        root = new StackPane();
-        menuBar = new HBox();
-        //menuBar.setStyle("-fx-border-color: black;-fx-border-width: 7px;");
-
-        pageSpeicificOptionBar = new VBox();
-        pageSpeicificOptionBar.setPrefSize(300,300);
-        pageSpeicificOptionBar.setMinSize(250,770);
-        pageSpeicificOptionBar.setMaxSize(250,770);
-        pageSpeicificOptionBar.setStyle("-fx-border-color: black;-fx-border-width: 7px;");
+        pageSpeicificOptionBar = PageSpecificMenuBar.getPageSpecificMenuBar();
         this.initializeMenuBar();
         root.getChildren().add(menuBar);
-
-        menuBar.setMinHeight(primaryStage.getY() / 6);
-        menuBar.setMinWidth(primaryStage.getX());
-        //menuBar.setStyle("-fx-background-color: #797D7F");
-
         root.getChildren().add(mainPage);
         mainPage.getChildren().add(pageSpeicificOptionBar);
         root.setMargin(mainPage, new Insets(30,0,0,0));
         this.controller.getFsm().setState(FiniteStateMachine.LOGGED_OUT_STATE);
         this.updateMenuBarState();
-
         primaryStage.setScene(new Scene(root, 1800, 1200));
         primaryStage.setMaximized(true);
         primaryStage.show();
-
-
         setAsBodyPane(home.generateHomeScreen());
-        //testMethod();
     }
 
     /**
@@ -92,9 +74,11 @@ public class GUIManager extends Application {
     public void init(){
         controller = new Controller();
         classPage  = new ClassPage(this);
-        home = new HomePage(this);
-        userPage = new UserPage(this);
-        controller.init(this);
+        home       = new HomePage(this);
+        userPage   = new UserPage(this);
+        taskBar    = new MenuBar();
+        root       = new StackPane();
+        menuBar    = new HBox();
     }
     public void testMethod(){
         User testUser = new User("james","hoffman","jhoffman1204","hoffman96","CSE","Junior","git@exampl",
@@ -126,6 +110,8 @@ public class GUIManager extends Application {
             setAsBodyPane(this.createSignUpForm());
         });
         menuButtons[0] = createProfileButton;
+
+
         Button addClassButton = new Button("Create Class");
         addClassButton.setOnAction(event -> {
             setAsBodyPane(this.addCreateNewClassForm());
@@ -236,7 +222,6 @@ public class GUIManager extends Application {
                 pageSpeicificOptionBar.getChildren().add(menuButtons[i]);
             }
         }
-
     }
     public VBox createSendCollabRequestPane(){
         VBox pane = new VBox();
@@ -466,8 +451,6 @@ public class GUIManager extends Application {
                 websiteTextField.clear();
                 coursesTextField.clear();
                 emailTextField.clear();
-                setAsBodyPane(userPage.generateUserPage(controller.getCurrentUser()));
-
                 SignUpHandler handler = new SignUpHandler(this,controller);
                 handler.handle(user);
 
