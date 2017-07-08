@@ -4,6 +4,7 @@ import Data.DataObjects.ClassInformation;
 import Data.DataObjects.User;
 import FSM.FiniteStateMachine;
 import GUI.GUIManager;
+import Handler.ViewClassHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -12,20 +13,27 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
+import Controller.Controller;
 /**
  * Created by James on 6/9/2017.
  */
 public class ClassPage {
     private VBox mainPane;
     GUIManager manager;
+    Controller controller;
     String currentClassSelected;
 
-    public ClassPage(GUIManager manager){
+    public ClassPage(GUIManager manager, Controller controller){
         mainPane = new VBox();
         this.manager = manager;
+        this.controller = controller;
     }
     /**
-     * This needs to be moved to another class
+     * Used to generate the pane for the class pane that displays classes you are the admin of
+     * and classes that you are a part of.
+     *
+     * Forms the GUI based on an array of classes that the use is the admin of and an array of classes that the user is a participant
+     *
      * @param username
      * @return
      */
@@ -48,18 +56,11 @@ public class ClassPage {
                 classSelectPane.getChildren().add(button);
                 button.setOnAction(event -> {
                     mainPane.getChildren().clear();
-                    Label description = new Label("Description: " + temp.getDescription());
-                    Label professor = new Label("Professor: " + temp.getProfessor());
-                    Label semester = new Label("Semester: "  + temp.getSemester());
-                    mainPane.getChildren().add(description);
-                    mainPane.getChildren().add(professor);
-                    mainPane.getChildren().add(semester);
                     currentClassSelected = temp.getClass_name();
-                    Label classParticiapntsLabel = new Label("Class Participants: ");
-                    mainPane.getChildren().add(classParticiapntsLabel);
-                    mainPane.getChildren().add(this.createParticipantsPane(currentClassSelected));
-                    manager.getController().setState(FiniteStateMachine.VIEW_CLASS_AS_USER);
-                    manager.updateMenuBarState();
+                    mainPane.getChildren().add(CoursePage.createClassPage(temp,manager));
+
+                    ViewClassHandler handler = new ViewClassHandler(manager,controller);
+                    handler.handle();
                 });
             }
         }
@@ -75,14 +76,8 @@ public class ClassPage {
                 classSelectPane.getChildren().add(button);
                 button.setOnAction(event -> {
                     mainPane.getChildren().clear();
-                    Label description = new Label("Description: " + temp.getDescription());
-                    Label professor = new Label("Professor: " + temp.getProfessor());
-                    Label semester = new Label("Semester: "  + temp.getSemester());
-                    mainPane.getChildren().add(description);
-                    mainPane.getChildren().add(professor);
-                    mainPane.getChildren().add(semester);
                     currentClassSelected = temp.getClass_name();
-                    mainPane.getChildren().add(this.createParticipantsPane(currentClassSelected));
+                    mainPane.getChildren().add(CoursePage.createClassPage(temp,manager));
                     manager.getController().setState(FiniteStateMachine.VIEW_CLASS_AS_ADMIN);
                     manager.updateMenuBarState();
                 });
@@ -117,19 +112,6 @@ public class ClassPage {
                 System.out.println("That user does not exist");
             }
         });
-    }
-    public VBox createParticipantsPane(String currentClassSelected){
-        VBox participantsPane = new VBox();
-
-        User[] classMembers = manager.getController().getParticipantsOfClass(currentClassSelected);
-        for(int i = 0; i < classMembers.length; i++){
-            if(classMembers[i] != null) {
-                Label memberLabel = new Label(classMembers[i].getUsername());
-                participantsPane.getChildren().add(memberLabel);
-            }
-        }
-
-        return participantsPane;
     }
     public void clearPage(){
         this.mainPane.getChildren().clear();

@@ -8,7 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-
+import Controller.Controller;
 
 /**
  * Created by James Hoffman on 6/20/2017.
@@ -16,9 +16,11 @@ import javafx.scene.text.Font;
 public class HomePage {
 
     GUIManager manager;
+    Controller controller;
 
-    public HomePage(GUIManager manager){
+    public HomePage(GUIManager manager, Controller controller){
         this.manager = manager;
+        this.controller = controller;
     }
 
     public VBox generateHomeScreen(){
@@ -38,7 +40,7 @@ public class HomePage {
         mainHomePane.getChildren().add(signupButton);
 
         signupButton.setOnAction(event -> {
-            manager.setAsBodyPane(manager.createSignUpForm());
+            manager.setAsBodyPane(SignupForm.createSignUpForm(controller,manager));
         });
         signupButton.setOnMouseEntered(event -> {
             signupButton.setStyle("-fx-background-color: #99cfe0;-fx-text-fill: white;-fx-font-size: 36px;-fx-border-style: solid;");

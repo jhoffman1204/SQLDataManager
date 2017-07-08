@@ -2,9 +2,7 @@ package GUI.MenuBar;
 
 import Data.DataObjects.ClassInformation;
 import FSM.FiniteStateMachine;
-import GUI.ClassGUI.ClassPage;
-import GUI.ClassGUI.LoginForm;
-import GUI.ClassGUI.MessagesPane;
+import GUI.ClassGUI.*;
 import GUI.GUIManager;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -35,14 +33,14 @@ public class MenuBar {
 
         Button createProfileButton = new Button("Create Profile");
         createProfileButton.setOnAction(event -> {
-            guiManager.setAsBodyPane(guiManager.createSignUpForm());
+            guiManager.setAsBodyPane(SignupForm.createSignUpForm(controller,guiManager));
         });
         menuButtons[0] = createProfileButton;
 
 
         Button addClassButton = new Button("Create Class");
         addClassButton.setOnAction(event -> {
-            guiManager.setAsBodyPane(guiManager.addCreateNewClassForm());
+            guiManager.setAsBodyPane(CreateClassPage.addCreateNewClassForm(controller,guiManager));
         });
         menuButtons[1] = addClassButton;
         Button loginButton = new Button("Login");
@@ -77,7 +75,7 @@ public class MenuBar {
         viewClasses.setOnAction(event -> {
             ClassInformation[] classes = controller.retrieveClasses(guiManager.getCurrentUser());
             ClassInformation[] participantClasses = controller.retrieveCoursesTakenByStudent(guiManager.getCurrentUser());
-            ClassPage classPage = new ClassPage(guiManager);
+            ClassPage classPage = new ClassPage(guiManager,controller);
             guiManager.setAsBodyPane(classPage.createClassesPane(controller.getCurrentUser().getUsername(), classes, participantClasses));
 
         });
@@ -85,7 +83,7 @@ public class MenuBar {
 
         Button addUser = new Button("Add User to Class");
         addUser.setOnAction(event -> {
-            ClassPage classPage = new ClassPage(guiManager);
+            ClassPage classPage = new ClassPage(guiManager,controller);
             classPage.clearPage();
             classPage.createaddUserPane(guiManager.getSelectedClass());
         });

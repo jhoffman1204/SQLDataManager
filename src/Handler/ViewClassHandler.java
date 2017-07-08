@@ -1,24 +1,18 @@
-package Handler.MenuButtons;
+package Handler;
 
 import Controller.Controller;
-import Data.DataObjects.User;
+import FSM.FiniteStateMachine;
 import GUI.GUIManager;
 import Handler.EventHandler;
-import Handler.SignUpHandler;
-import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 
 /**
  * Created by James Hoffman on 7/7/2017.
  */
-public class CreateSignInHandler extends EventHandler{
+public class ViewClassHandler extends EventHandler{
     GUIManager guiManager;
     Controller controller;
 
-    public CreateSignInHandler(GUIManager manager, Controller controller){
+    public ViewClassHandler(GUIManager manager, Controller controller){
         this.guiManager = manager;
         this.controller = controller;
     }
@@ -29,6 +23,7 @@ public class CreateSignInHandler extends EventHandler{
         return guiManager;
     }
     public void handle(){
-
+        guiManager.getController().setState(FiniteStateMachine.VIEW_CLASS_AS_USER);
+        guiManager.updateMenuBarState();
     }
 }

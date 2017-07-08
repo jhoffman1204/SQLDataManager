@@ -1,6 +1,7 @@
 package Handler.MenuButtons;
 
 import Controller.Controller;
+import Data.DataObjects.ClassInformation;
 import GUI.GUIManager;
 
 /**
@@ -20,7 +21,7 @@ public class CreateClassHandler {
     public GUIManager getGuiManager(){
         return guiManager;
     }
-    public void handle(){
-
+    public void handle(ClassInformation ci){
+        controller.addClass(ci);
     }
 }

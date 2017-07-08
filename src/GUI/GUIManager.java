@@ -12,6 +12,7 @@ import GUI.ClassGUI.UserPage;
 import GUI.MenuBar.MenuBar;
 import GUI.MenuBar.PageSpecificMenuBar;
 import Handler.LoginHandler;
+import Handler.MenuButtons.CreateClassHandler;
 import Handler.SignUpHandler;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -36,12 +37,10 @@ public class GUIManager extends Application {
     HBox menuBar;
     HBox mainPage = new HBox();
     VBox pageSpeicificOptionBar;
-    Label successLabel;
     Node[] menuButtons = new Node[9];
     String currentUser;
     String currentViewingUser;
     String selectedClass;
-    Button viewMessages;
 
     ClassPage classPage;
     UserPage userPage;
@@ -75,8 +74,8 @@ public class GUIManager extends Application {
      */
     public void init(){
         controller = new Controller();
-        classPage  = new ClassPage(this);
-        home       = new HomePage(this);
+        classPage  = new ClassPage(this,controller);
+        home       = new HomePage(this,controller);
         userPage   = new UserPage(this);
         taskBar    = new MenuBar();
         root       = new StackPane();
@@ -154,10 +153,6 @@ public class GUIManager extends Application {
         pane.getChildren().add(submit);
         return pane;
     }
-    public void setSize(Pane pane, int height, int width){
-        pane.setMaxSize(width,height);
-        pane.setMinSize(width,height);
-    }
     /**
      * Clears the current body pane and adds the new parameter pane
      * @param pane: Generic Pane so it can be a HBox, GridPane etc.
@@ -194,7 +189,7 @@ public class GUIManager extends Application {
             }
             ClassInformation classInformation = controller.searchForClass(searchField.getText());
             if(classInformation != null){
-                setAsBodyPane(createClassPage(classInformation));
+                //setAsBodyPane(createClassPage(classInformation));
             }
         });
         return searchBar;
@@ -206,202 +201,6 @@ public class GUIManager extends Application {
         homescreen.add(label,0,0);
 
         return homescreen;
-    }
-    public GridPane createClassPage(ClassInformation classInformation){
-        GridPane classPage = new GridPane();
-
-        Label classNameLabel = new Label("ClassName: " + classInformation.getClass_name());
-        Label descriptionLabel = new Label("Description: " + classInformation.getDescription());
-        Label professorLabel = new Label("Professor: " + classInformation.getProfessor());
-        Label semesterLabel = new Label("Semester: " + classInformation.getSemester());
-        Label prerequisitesLabel = new Label("Prerequisites: " + classInformation.getPrerequisites());
-        Label adminsLabel = new Label("Admins: " + classInformation.getAdmins());
-
-        classPage.add(classNameLabel,0,0);
-        classPage.add(descriptionLabel,0,1);
-        classPage.add(professorLabel,0,2);
-        classPage.add(semesterLabel,0,3);
-        classPage.add(prerequisitesLabel,0,4);
-        classPage.add(adminsLabel,0,5);
-
-        return classPage;
-    }
-    public GridPane createSignUpForm(){
-        GridPane signupForm = new GridPane();
-
-        TextField firstNameTextField = new TextField();
-        TextField lastNameTextField = new TextField();
-        TextField usernameTextField = new TextField();
-        TextField passwordTextField = new TextField();
-        TextField majorTextField = new TextField();
-        TextField yearTextField = new TextField();
-        TextField gitTextField = new TextField();
-        TextField websiteTextField = new TextField();
-        TextField coursesTextField = new TextField();
-        TextField emailTextField = new TextField();
-
-        Label firstNameLabel = new Label("First Name:       ");
-        Label lastNameLabel = new Label ("Last Name:        ");
-        Label usernameLabel = new Label ("Username:         ");
-        Label passwordLabel = new Label ("Password:         ");
-        Label majorLabel = new Label    ("Major:            ");
-        Label yearLabel = new Label     ("Year (eg.Sophomore)");
-        Label gitLabel = new Label      ("Git:              ");
-        Label websiteLabel = new Label  ("Website:          ");
-        Label coursesLabel = new Label  ("Previous courses (eg. CSE 219):        ");
-        Label emailLabel = new Label    ("Email:            ");
-
-        // add the labels to the sign up form
-        signupForm.add(firstNameLabel,0,0);
-        signupForm.add(lastNameLabel ,0,1);
-        signupForm.add(usernameLabel ,0,2);
-        signupForm.add(passwordLabel ,0,3);
-        signupForm.add(majorLabel    ,0,4);
-        signupForm.add(yearLabel     ,0,5);
-        signupForm.add(gitLabel      ,0,6);
-        signupForm.add(websiteLabel  ,0,7);
-        signupForm.add(coursesLabel  ,0,8);
-        signupForm.add(emailLabel    ,0,9);
-        // add text fields to the sign up form
-        signupForm.add(firstNameTextField,1,0);
-        signupForm.add(lastNameTextField ,1,1);
-        signupForm.add(usernameTextField ,1,2);
-        signupForm.add(passwordTextField ,1,3);
-        signupForm.add(majorTextField    ,1,4);
-        signupForm.add(yearTextField     ,1,5);
-        signupForm.add(gitTextField      ,1,6);
-        signupForm.add(websiteTextField  ,1,7);
-        signupForm.add(coursesTextField  ,1,8);
-        signupForm.add(emailTextField    ,1,9);
-
-        signupForm.setMargin(firstNameTextField,new Insets(0,0,15,0));
-        signupForm.setMargin(lastNameTextField ,new Insets(0,0,15,0));
-        signupForm.setMargin(usernameTextField ,new Insets(0,0,15,0));
-        signupForm.setMargin(passwordTextField ,new Insets(0,0,15,0));
-        signupForm.setMargin(majorTextField    ,new Insets(0,0,15,0));
-        signupForm.setMargin(yearTextField     ,new Insets(0,0,15,0));
-        signupForm.setMargin(gitTextField      ,new Insets(0,0,15,0));
-        signupForm.setMargin(websiteTextField  ,new Insets(0,0,15,0));
-        signupForm.setMargin(coursesTextField  ,new Insets(0,0,15,0));
-        signupForm.setMargin(emailTextField    ,new Insets(0,0,15,0));
-
-        signupForm.setMargin(firstNameLabel,new Insets(0,0,15,0));
-        signupForm.setMargin(lastNameLabel ,new Insets(0,0,15,0));
-        signupForm.setMargin(usernameLabel ,new Insets(0,0,15,0));
-        signupForm.setMargin(passwordLabel ,new Insets(0,0,15,0));
-        signupForm.setMargin(majorLabel    ,new Insets(0,0,15,0));
-        signupForm.setMargin(yearLabel     ,new Insets(0,0,15,0));
-        signupForm.setMargin(gitLabel      ,new Insets(0,0,15,0));
-        signupForm.setMargin(websiteLabel  ,new Insets(0,0,15,0));
-        signupForm.setMargin(coursesLabel  ,new Insets(0,0,15,0));
-        signupForm.setMargin(emailLabel    ,new Insets(0,0,15,0));
-
-        Button submitNewUser = new Button();
-        submitNewUser.setText("Submit");
-        submitNewUser.setOnAction(event -> {
-                User user = new User(firstNameTextField.getText(),
-                        lastNameTextField.getText(),
-                        usernameTextField.getText(),
-                        passwordTextField.getText(),
-                        majorTextField.getText(),
-                        yearTextField.getText(),
-                        gitTextField.getText(),
-                        websiteTextField.getText(),
-                        coursesTextField.getText(),
-                        emailTextField.getText());
-                firstNameTextField.clear();
-                lastNameTextField.clear();
-                passwordTextField.clear();
-                majorTextField.clear();
-                yearTextField.clear();
-                gitTextField.clear();
-                websiteTextField.clear();
-                coursesTextField.clear();
-                emailTextField.clear();
-                SignUpHandler handler = new SignUpHandler(this,controller);
-                handler.handle(user);
-
-        });
-
-        signupForm.add(submitNewUser    ,0,10);
-
-
-        return signupForm;
-    }
-    public void setCurrentViewingUsers(String username){
-        this.currentViewingUser = username;
-    }
-    public GridPane addCreateNewClassForm(){
-        GridPane createNewClassForm = new GridPane();
-
-        TextField className = new TextField();
-        TextField description = new TextField();
-        TextField professor = new TextField();
-        TextField semester = new TextField();
-        TextField prerequisites = new TextField();
-        TextField admins = new TextField();
-
-        Label classNameLabel = new Label     ("Class Name:       ");
-        Label descriptionLabel = new Label   ("Description:        ");
-        Label professorLabel = new Label     ("Professor:         ");
-        Label semesterLabel = new Label      ("Semester:         ");
-        Label prerequisitesLabel = new Label ("Prerequisuites:            ");
-        Label adminsLabel = new Label        ("Admins: ");
-
-        // add the labels to the sign up form
-        createNewClassForm.add(classNameLabel,0,0);
-        createNewClassForm.add(descriptionLabel,0,1);
-        createNewClassForm.add(professorLabel,0,2);
-        createNewClassForm.add(semesterLabel,0,3);
-        createNewClassForm.add(prerequisitesLabel,0,4);
-        createNewClassForm.add(adminsLabel,0,5);
-
-        // add text fields to the form
-        createNewClassForm.add(className,1,0);
-        createNewClassForm.add(description,1,1);
-        createNewClassForm.add(professor,1,2);
-        createNewClassForm.add(semester,1,3);
-        createNewClassForm.add(prerequisites,1,4);
-        createNewClassForm.add(admins,1,5);
-
-        //
-        createNewClassForm.setMargin(classNameLabel    ,new Insets(0,0,15,0));
-        createNewClassForm.setMargin(descriptionLabel  ,new Insets(0,0,15,0));
-        createNewClassForm.setMargin(professorLabel    ,new Insets(0,0,15,0));
-        createNewClassForm.setMargin(semesterLabel     ,new Insets(0,0,15,0));
-        createNewClassForm.setMargin(prerequisitesLabel,new Insets(0,0,15,0));
-        createNewClassForm.setMargin(adminsLabel       ,new Insets(0,0,15,0));
-
-        createNewClassForm.setMargin(className    ,new Insets(0,0,15,0));
-        createNewClassForm.setMargin(description  ,new Insets(0,0,15,0));
-        createNewClassForm.setMargin(professor    ,new Insets(0,0,15,0));
-        createNewClassForm.setMargin(semester     ,new Insets(0,0,15,0));
-        createNewClassForm.setMargin(prerequisites,new Insets(0,0,15,0));
-        createNewClassForm.setMargin(admins       ,new Insets(0,0,15,0));
-
-        Button submitNewUser = new Button();
-        submitNewUser.setText("Submit");
-        submitNewUser.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                ClassInformation ci = new ClassInformation(className.getText(),
-                        description.getText(),
-                        professor.getText(),
-                        semester.getText(),
-                        prerequisites.getText(),
-                        admins.getText());
-                controller.addClass(ci);
-                className.clear();
-                description.clear();
-                professor.clear();
-                semester.clear();
-                prerequisites.clear();
-                admins.clear();
-            }
-        });
-        createNewClassForm.add(submitNewUser    ,0,10);
-
-        return createNewClassForm;
     }
     public void setSelectedClass(String selectedClass){
         this.selectedClass = selectedClass;
