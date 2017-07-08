@@ -12,7 +12,6 @@ public class PageSpecificMenuBar {
         box.setMinSize(250,770);
         box.setMaxSize(250,770);
         box.setStyle("-fx-border-color: black;-fx-border-width: 7px;");
-
         return box;
     }
 }

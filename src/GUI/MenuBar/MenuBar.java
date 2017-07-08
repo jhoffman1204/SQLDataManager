@@ -1,5 +1,10 @@
 package GUI.MenuBar;
 
+import Data.DataObjects.ClassInformation;
+import FSM.FiniteStateMachine;
+import GUI.ClassGUI.ClassPage;
+import GUI.ClassGUI.LoginForm;
+import GUI.ClassGUI.MessagesPane;
 import GUI.GUIManager;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -20,9 +25,13 @@ public class MenuBar {
         this.guiManager = guiManager;
         this.controller = controller;
     }
-    public VBox creaetMenuPane(){
+    public VBox createMenuPane(){
 
         VBox pane = new VBox();
+
+        return pane;
+    }
+    public Node[] initializeMenuBar(){
 
         Button createProfileButton = new Button("Create Profile");
         createProfileButton.setOnAction(event -> {
@@ -30,6 +39,59 @@ public class MenuBar {
         });
         menuButtons[0] = createProfileButton;
 
-        return pane;
+
+        Button addClassButton = new Button("Create Class");
+        addClassButton.setOnAction(event -> {
+            guiManager.setAsBodyPane(guiManager.addCreateNewClassForm());
+        });
+        menuButtons[1] = addClassButton;
+        Button loginButton = new Button("Login");
+        loginButton.setOnAction(event -> {
+            guiManager.setAsBodyPane(LoginForm.createLoginForm(controller,guiManager));
+        });
+        menuButtons[2] = loginButton;
+        Button logoutButton = new Button("Logout");
+        logoutButton.setOnAction(event -> {
+            controller.getFsm().setState(FiniteStateMachine.LOGGED_OUT_STATE);
+            controller.logout();
+            guiManager.updateMenuBarState();
+            guiManager.setAsBodyPane(guiManager.createHomeScreen());
+        });
+        menuButtons[3] = logoutButton;
+
+        menuButtons[4] = guiManager.createSearchBar();
+
+        Button sendCollabButton = new Button("Send Collaboration Request");
+        menuButtons[5] = sendCollabButton;
+        sendCollabButton.setOnAction(event -> {
+            guiManager.setAsBodyPane(guiManager.createSendCollabRequestPane());
+        });
+
+        Button viewMessages = new Button("Inbox");
+        menuButtons[6] = viewMessages;
+        viewMessages.setOnAction(event -> {
+            guiManager.setAsBodyPane(MessagesPane.createInbox(controller,guiManager));
+        });
+
+        Button viewClasses = new Button("View Classes");
+        viewClasses.setOnAction(event -> {
+            ClassInformation[] classes = controller.retrieveClasses(guiManager.getCurrentUser());
+            ClassInformation[] participantClasses = controller.retrieveCoursesTakenByStudent(guiManager.getCurrentUser());
+            ClassPage classPage = new ClassPage(guiManager);
+            guiManager.setAsBodyPane(classPage.createClassesPane(controller.getCurrentUser().getUsername(), classes, participantClasses));
+
+        });
+        menuButtons[7] = viewClasses;
+
+        Button addUser = new Button("Add User to Class");
+        addUser.setOnAction(event -> {
+            ClassPage classPage = new ClassPage(guiManager);
+            classPage.clearPage();
+            classPage.createaddUserPane(guiManager.getSelectedClass());
+        });
+        menuButtons[8] = addUser;
+
+
+        return menuButtons;
     }
 }

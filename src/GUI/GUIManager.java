@@ -50,18 +50,20 @@ public class GUIManager extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+
         this.init();
         taskBar.init(this.controller,this);
         controller.init(this);
-        primaryStage.setTitle("Code Dash");
-        pageSpeicificOptionBar = PageSpecificMenuBar.getPageSpecificMenuBar();
         this.initializeMenuBar();
+
         root.getChildren().add(menuBar);
         root.getChildren().add(mainPage);
         mainPage.getChildren().add(pageSpeicificOptionBar);
         root.setMargin(mainPage, new Insets(30,0,0,0));
         this.controller.getFsm().setState(FiniteStateMachine.LOGGED_OUT_STATE);
         this.updateMenuBarState();
+
+        primaryStage.setTitle("Code Dash");
         primaryStage.setScene(new Scene(root, 1800, 1200));
         primaryStage.setMaximized(true);
         primaryStage.show();
@@ -79,8 +81,9 @@ public class GUIManager extends Application {
         taskBar    = new MenuBar();
         root       = new StackPane();
         menuBar    = new HBox();
+        pageSpeicificOptionBar = PageSpecificMenuBar.getPageSpecificMenuBar();
     }
-    public void testMethod(){
+    public void testerMethod(){
         User testUser = new User("james","hoffman","jhoffman1204","hoffman96","CSE","Junior","git@exampl",
                 "jamesuhoffman.com","courses","jhoffman1204@gmail.com");
         setAsBodyPane(userPage.generateUserPage(testUser));
@@ -104,108 +107,7 @@ public class GUIManager extends Application {
      * @
      */
     public void initializeMenuBar(){
-
-        Button createProfileButton = new Button("Create Profile");
-        createProfileButton.setOnAction(event -> {
-            setAsBodyPane(this.createSignUpForm());
-        });
-        menuButtons[0] = createProfileButton;
-
-
-        Button addClassButton = new Button("Create Class");
-        addClassButton.setOnAction(event -> {
-            setAsBodyPane(this.addCreateNewClassForm());
-        });
-        menuButtons[1] = addClassButton;
-        Button loginButton = new Button("Login");
-        loginButton.setOnAction(event -> {
-            setAsBodyPane(this.createLoginForm());
-        });
-        menuButtons[2] = loginButton;
-        Button logoutButton = new Button("Logout");
-        logoutButton.setOnAction(event -> {
-            controller.getFsm().setState(FiniteStateMachine.LOGGED_OUT_STATE);
-            controller.logout();
-            updateMenuBarState();
-            setAsBodyPane(createHomeScreen());
-        });
-        menuButtons[3] = logoutButton;
-
-        menuButtons[4] = createSearchBar();
-
-        Button sendCollabButton = new Button("Send Collaboration Request");
-        menuButtons[5] = sendCollabButton;
-        sendCollabButton.setOnAction(event -> {
-            setAsBodyPane(this.createSendCollabRequestPane());
-        });
-
-        viewMessages = new Button("Inbox");
-        menuButtons[6] = viewMessages;
-        viewMessages.setOnAction(event -> {
-            setAsBodyPane(this.createInbox());
-        });
-
-        Button viewClasses = new Button("View Classes");
-        viewClasses.setOnAction(event -> {
-            ClassInformation[] classes = controller.retrieveClasses(this.currentUser);
-            ClassInformation[] participantClasses = controller.retrieveCoursesTakenByStudent(this.currentUser);
-            //System.out.println(participantClasses[0]);
-            setAsBodyPane(classPage.createClassesPane(controller.getCurrentUser().getUsername(), classes, participantClasses));
-
-        });
-        menuButtons[7] = viewClasses;
-
-        Button addUser = new Button("Add User to Class");
-        addUser.setOnAction(event -> {
-            classPage.clearPage();
-            classPage.createaddUserPane(this.selectedClass);
-        });
-        menuButtons[8] = addUser;
-
-
-    }
-    public String getCurrentUser(){
-        return this.currentUser;
-    }
-    public void setCurrentUser(String currentUser){
-        this.currentUser = currentUser;
-    }
-    public String getCurrentViewingUser() {
-        return currentViewingUser;
-    }
-
-    public void setCurrentViewingUser(String currentViewingUser) {
-        this.currentViewingUser = currentViewingUser;
-    }
-
-    public HBox createInbox(){
-        HBox pane = new HBox();
-        VBox subjects = new VBox();
-        VBox showMessage = new VBox();
-        pane.getChildren().add(subjects);
-        pane.getChildren().add(showMessage);
-        Label message = new Label("message");
-        Label sender  = new Label("Sent by: ");
-
-        Message[] messages = controller.retrieveMessages(controller.getCurrentUser().getUsername());
-        System.out.println("the current user is: " + controller.getCurrentUser().getUsername());
-        for(int i = 0; i < messages.length; i++){
-            if(messages[i] != null) {
-                Button button = new Button(messages[i].getSubject());
-                String messagereceieved = messages[i].getBody();
-                String senderText = messages[i].getSendingUser();
-                button.setOnAction(event -> {
-                    sender.setText("Sent by: " + senderText);
-                    message.setText(messagereceieved);
-
-                });
-                subjects.getChildren().add(button);
-            }
-        }
-        showMessage.getChildren().add(sender);
-        showMessage.getChildren().add(message);
-        pane.setMargin(showMessage, new Insets(0,0,0,50));
-        return pane;
+        menuButtons = taskBar.initializeMenuBar();
     }
     /**
      * Clears the menu and determines which buttons to display based on the current state
@@ -323,41 +225,6 @@ public class GUIManager extends Application {
         classPage.add(adminsLabel,0,5);
 
         return classPage;
-    }
-    public GridPane createLoginForm(){
-        // Creating the login pane
-        GridPane loginForm = new GridPane();
-        TextField usernameOrEmail = new TextField();
-        TextField password = new TextField();
-        Label usernameOrEmailLabel = new Label("Username/Email:    ");
-        Label passwordLabel = new Label("Password: ");
-        loginForm.add(usernameOrEmailLabel,0,0);
-        loginForm.add(passwordLabel,0,1);
-        loginForm.add(usernameOrEmail,1,0);
-        loginForm.add(password,1,1);
-        loginForm.setMargin(usernameOrEmailLabel , new Insets(20,0,15,20));
-        loginForm.setMargin(passwordLabel        , new Insets(20,0,15,20));
-        loginForm.setMargin(usernameOrEmail      , new Insets(20,0,15,20));
-        loginForm.setMargin(password             , new Insets(20,0,15,20));
-        Button loginSubmit = new Button("Login");
-        loginSubmit.setOnAction(event -> {
-            if(controller.login(usernameOrEmail.getText(),password.getText()) == true){
-                LoginHandler loginHandler = new LoginHandler(this,controller);
-                loginHandler.handle(usernameOrEmail.getText());
-                setAsBodyPane(userPage.generateUserPage(controller.getCurrentUser()));
-                this.currentUser = controller.getCurrentUser().getUsername();
-            }
-            else{
-                successLabel = new Label("Incorrect Username/Password");
-                loginForm.add(successLabel,0,3);
-                loginForm.setMargin(successLabel,new Insets(15,0,0,0));
-            }
-        });
-
-        loginForm.add(loginSubmit,0,2);
-        loginForm.setMargin(loginSubmit, new Insets(20,0,15,20));
-
-        return loginForm;
     }
     public GridPane createSignUpForm(){
         GridPane signupForm = new GridPane();
@@ -541,5 +408,14 @@ public class GUIManager extends Application {
     }
     public Controller getController(){
         return this.controller;
+    }
+    public String getSelectedClass(){ return this.selectedClass; }
+    public String getCurrentUser(){ return this.currentUser; }
+    public void setCurrentUser(String currentUser){ this.currentUser = currentUser; }
+    public String getCurrentViewingUser() {
+        return currentViewingUser;
+    }
+    public void setCurrentViewingUser(String currentViewingUser) {
+        this.currentViewingUser = currentViewingUser;
     }
 }
