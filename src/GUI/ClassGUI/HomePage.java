@@ -23,7 +23,7 @@ public class HomePage {
         this.controller = controller;
     }
 
-    public VBox generateHomeScreen(){
+    public static VBox generateHomeScreen(Controller controller, GUIManager guiManager){
         VBox mainHomePane = new VBox();
 
         Label label = new Label("Welcome to CodeDash!");
@@ -40,7 +40,7 @@ public class HomePage {
         mainHomePane.getChildren().add(signupButton);
 
         signupButton.setOnAction(event -> {
-            manager.setAsBodyPane(SignupForm.createSignUpForm(controller,manager));
+            guiManager.setAsBodyPane(SignupForm.createSignUpForm(controller,guiManager));
         });
         signupButton.setOnMouseEntered(event -> {
             signupButton.setStyle("-fx-background-color: #99cfe0;-fx-text-fill: white;-fx-font-size: 36px;-fx-border-style: solid;");

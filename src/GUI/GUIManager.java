@@ -47,6 +47,12 @@ public class GUIManager extends Application {
     HomePage home;
     MenuBar taskBar;
 
+    /**
+     * Where the beginning to the program starts
+     * Initializes the main pane and the
+     * @param primaryStage
+     */
+
     @Override
     public void start(Stage primaryStage) {
 
@@ -66,7 +72,7 @@ public class GUIManager extends Application {
         primaryStage.setScene(new Scene(root, 1800, 1200));
         primaryStage.setMaximized(true);
         primaryStage.show();
-        setAsBodyPane(home.generateHomeScreen());
+        setAsBodyPane(HomePage.generateHomeScreen(controller,this));
     }
 
     /**
@@ -82,31 +88,13 @@ public class GUIManager extends Application {
         menuBar    = new HBox();
         pageSpeicificOptionBar = PageSpecificMenuBar.getPageSpecificMenuBar();
     }
-    public void testerMethod(){
-        User testUser = new User("james","hoffman","jhoffman1204","hoffman96","CSE","Junior","git@exampl",
-                "jamesuhoffman.com","courses","jhoffman1204@gmail.com");
-        setAsBodyPane(userPage.generateUserPage(testUser));
-        this.currentUser = "jhoffman1204";
-        controller.setCurrentUser(testUser);
 
-    }
-    public void setController(Controller controller){
-        this.controller = controller;
-    }
     /**
-     * The state manager controls which buttons need to be visible
-     * 0. Create Profile Button
-     * 1. Create Class Button
-     * 2. Login Button
-     * 3. Logout Button
-     * 4. Search Bar
-     * 5. Send Collab Request
-     * 6. View Messages
-     * 7. View Classes
-     * @
+     * Loads the Menu Buttons that will be used throughout the program and places them in
+     * an array that the FSM will pick and choose from based on what page the user is on.
      */
     public void initializeMenuBar(){
-        menuButtons = taskBar.initializeMenuBar();
+        this.menuButtons = taskBar.initializeMenuBar();
     }
     /**
      * Clears the menu and determines which buttons to display based on the current state
@@ -124,35 +112,6 @@ public class GUIManager extends Application {
             }
         }
     }
-    public VBox createSendCollabRequestPane(){
-        VBox pane = new VBox();
-        Label viewUserLabel = new Label("Sending Data.DataObjects.Message to: " + currentViewingUser);
-        TextField subjectField = new TextField();
-        Label subject = new Label("Subject: ");
-        Label message = new Label("Data.DataObjects.Message: ");
-        subjectField.setMinSize(200,50);
-        subjectField.setMaxSize(200,50);
-        TextField bodyField = new TextField();
-        bodyField.setMinSize(400,200);
-        bodyField.setMaxSize(400,200);
-
-        pane.getChildren().add(viewUserLabel);
-        pane.getChildren().add(subject);
-        pane.getChildren().add(subjectField);
-        pane.getChildren().add(message);
-        pane.getChildren().add(bodyField);
-
-        Button submit = new Button("Send");
-        submit.setOnAction(event -> {
-            controller.sendMessage(currentViewingUser, subjectField.getText(), bodyField.getText());
-            System.out.println("current viewing user " + currentViewingUser);
-            subjectField.clear();
-            bodyField.clear();
-            viewUserLabel.setText("Data.DataObjects.Message Sent!");
-        });
-        pane.getChildren().add(submit);
-        return pane;
-    }
     /**
      * Clears the current body pane and adds the new parameter pane
      * @param pane: Generic Pane so it can be a HBox, GridPane etc.
@@ -167,43 +126,15 @@ public class GUIManager extends Application {
     }
 
     /**
-     * Creates a Textfield that allows one to search for a user
-     *   - calls the controller's method to search for a user
-     * @return: The HBox that will contain the search box and search button
+     * Getter and Setter methods
+     * @param selectedClass
      */
-    public HBox createSearchBar(){
-        HBox searchBar = new HBox();
 
-        TextField searchField = new TextField();
-        Button submitSearch = new Button("Search");
-        searchBar.getChildren().add(searchField);
-        searchBar.getChildren().add(submitSearch);
-        submitSearch.setOnAction(event -> {
-            User temp = controller.searchForUser(searchField.getText());
-            if(temp != null){
-                controller.getFsm().setState(FiniteStateMachine.VIEW_USER_STATE);
-                currentViewingUser = temp.getUsername();
-                setAsBodyPane(userPage.generateUserPage(temp));
-                updateMenuBarState();
-                //System.out.println("current viewing user is " + temp.getUsername());
-            }
-            ClassInformation classInformation = controller.searchForClass(searchField.getText());
-            if(classInformation != null){
-                //setAsBodyPane(createClassPage(classInformation));
-            }
-        });
-        return searchBar;
-    }
-    public GridPane createHomeScreen(){
-        GridPane homescreen = new GridPane();
-
-        Label label = new Label("Home Screen");
-        homescreen.add(label,0,0);
-
-        return homescreen;
-    }
     public void setSelectedClass(String selectedClass){
         this.selectedClass = selectedClass;
+    }
+    public void setController(Controller controller){
+        this.controller = controller;
     }
     public Controller getController(){
         return this.controller;

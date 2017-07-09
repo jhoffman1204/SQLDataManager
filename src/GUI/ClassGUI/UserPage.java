@@ -27,8 +27,10 @@ public class UserPage {
 
         VBox leftColumn = new VBox();
         VBox userInformationPane = new VBox();
+        HBox userPage = new HBox();
         VBox microPostPane = createMicroPostPane();
-
+        VBox bioPane = this.createBioPane();
+        ScrollPane microposts = createMicroPostDisplayPane();
 
         Label userNameLabel = new Label(user.getUsername());
         userNameLabel.setStyle("-fx-font: 35px Verdana;-fx-text-fill: black;");
@@ -52,16 +54,12 @@ public class UserPage {
 
 
         leftColumn.getChildren().add(userInformationPane);
+        leftColumn.getChildren().add(bioPane);
         leftColumn.getChildren().add(microPostPane);
 
-        for (Node child : userInformationPane.getChildren()) {
-            //leftColumn.setMargin(child , new Insets(20,0,15,20));
-        }
         leftColumn.setMargin(microPostPane , new Insets(20,0,15,0));
 
-        HBox userPage = new HBox();
         userPage.getChildren().add(leftColumn);
-        ScrollPane microposts = createMicroPostDisplayPane();
         userPage.getChildren().add(microposts);
 
         userPage.setMargin(microposts,new Insets(0,0,0,100));
@@ -144,7 +142,41 @@ public class UserPage {
 
         return postsPane;
     }
-    public void setSize(Object object, int width, int height){
+    public VBox createBioPane(){
+        VBox box = new VBox();
 
+        Label label = new Label("Bio");
+        HBox bioPane = new HBox();
+        Label bio = new Label("This is a test bio");
+        bioPane.setPrefSize(500,200);
+        bioPane.setMaxWidth(300);
+        bioPane.setStyle("-fx-border-style: solid;");
+        Button button = new Button("Edit Bio");
+
+        bioPane.getChildren().add(bio);
+        box.getChildren().add(label);
+        box.getChildren().add(bioPane);
+        box.getChildren().add(button);
+
+        button.setOnAction(event -> {
+            bioPane.getChildren().clear();
+            TextArea area = new TextArea();
+            area.setPrefSize(500,200);
+            area.setMaxWidth(300);
+            bioPane.getChildren().add(area);
+            Button submitNewBio = new Button("Submit New Bio");
+            box.getChildren().remove(button);
+            box.getChildren().add(submitNewBio);
+            submitNewBio.setOnAction(event1 -> {
+                Label newBio = new Label(area.getText());
+                bioPane.getChildren().clear();
+                bioPane.getChildren().add(newBio);
+                box.getChildren().remove(submitNewBio);
+                box.getChildren().add(button);
+            });
+
+        });
+
+        return box;
     }
 }

@@ -11,7 +11,20 @@ import Controller.Controller;
 
 /**
  * Created by James Hoffman on 7/7/2017.
+ *
+ * /**
+ * The state manager controls which buttons need to be visible
+ * 0. Create Profile Button
+ * 1. Create Class Button
+ * 2. Login Button
+ * 3. Logout Button
+ * 4. Search Bar
+ * 5. Send Collab Request
+ * 6. View Messages
+ * 7. View Classes
+ * @
  */
+
 public class MenuBar {
 
     Controller controller;
@@ -53,16 +66,16 @@ public class MenuBar {
             controller.getFsm().setState(FiniteStateMachine.LOGGED_OUT_STATE);
             controller.logout();
             guiManager.updateMenuBarState();
-            guiManager.setAsBodyPane(guiManager.createHomeScreen());
+            guiManager.setAsBodyPane(HomePage.generateHomeScreen(controller,guiManager));
         });
         menuButtons[3] = logoutButton;
 
-        menuButtons[4] = guiManager.createSearchBar();
+        menuButtons[4] = SearchBar.createSearchBar(controller,guiManager);
 
         Button sendCollabButton = new Button("Send Collaboration Request");
         menuButtons[5] = sendCollabButton;
         sendCollabButton.setOnAction(event -> {
-            guiManager.setAsBodyPane(guiManager.createSendCollabRequestPane());
+            guiManager.setAsBodyPane(SendMessagePane.createSendCollabRequestPane(controller,guiManager));
         });
 
         Button viewMessages = new Button("Inbox");

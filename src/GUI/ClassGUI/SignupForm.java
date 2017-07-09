@@ -112,7 +112,13 @@ public class SignupForm {
             emailTextField.clear();
 
             SignUpHandler handler = new SignUpHandler(guiManager,controller);
-            handler.handle(user);
+            if(handler.handle(user) == true){
+
+            }
+            else{
+                Label label = new Label("That user already exists!");
+                signupForm.add(label,0,11);
+            }
         });
 
         signupForm.add(submitNewUser    ,0,10);

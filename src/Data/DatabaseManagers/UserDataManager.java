@@ -61,7 +61,14 @@ public class UserDataManager extends DataManager {
             e.printStackTrace();
         }
     }
-
+    public boolean userExist(User user){
+        if(this.retrieveData(user.getUsername()) != null){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
     /**
      * another useless comment
      * @param username

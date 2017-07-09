@@ -44,6 +44,12 @@ public class Controller {
         userManager.closeConnection();
         this.currentUser = user;
     }
+    public boolean userExist(User user){
+        userManager.init();
+        boolean a = userManager.userExist(user);
+        userManager.closeConnection();
+        return a;
+    }
     public void addClass(ClassInformation classInformation){
         classInformationManager.init();
         classInformationManager.addData(classInformation);
