@@ -36,7 +36,7 @@ public class LoginForm {
                 LoginHandler loginHandler = new LoginHandler(guiManager,controller);
                 loginHandler.handle(usernameOrEmail.getText());
                 UserPage userPage = new UserPage(guiManager);
-                guiManager.setAsBodyPane(userPage.generateUserPage(controller.getCurrentUser()));
+                guiManager.setAsBodyPane(userPage.generateUserPage(controller.getCurrentUser(),true));
             }
             else{
                 Label successLabel = new Label("Incorrect Username/Password");

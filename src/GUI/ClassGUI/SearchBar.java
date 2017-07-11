@@ -31,7 +31,7 @@ public class SearchBar {
                 controller.getFsm().setState(FiniteStateMachine.VIEW_USER_STATE);
                 guiManager.setCurrentViewingUser(temp.getUsername());
                 UserPage userPage = new UserPage(guiManager);
-                guiManager.setAsBodyPane(userPage.generateUserPage(temp));
+                guiManager.setAsBodyPane(userPage.generateUserPage(temp,false));
                 guiManager.updateMenuBarState();
                 //System.out.println("current viewing user is " + temp.getUsername());
             }

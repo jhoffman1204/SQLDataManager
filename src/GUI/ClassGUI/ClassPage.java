@@ -57,6 +57,7 @@ public class ClassPage {
                 button.setOnAction(event -> {
                     mainPane.getChildren().clear();
                     currentClassSelected = temp.getClass_name();
+                    manager.setSelectedClass(temp.getClass_name());
                     mainPane.getChildren().add(CoursePage.createClassPage(temp,manager));
 
                     ViewClassHandler handler = new ViewClassHandler(manager,controller);
@@ -77,6 +78,7 @@ public class ClassPage {
                 button.setOnAction(event -> {
                     mainPane.getChildren().clear();
                     currentClassSelected = temp.getClass_name();
+                    manager.setSelectedClass(temp.getClass_name());
                     mainPane.getChildren().add(CoursePage.createClassPage(temp,manager));
                     manager.getController().setState(FiniteStateMachine.VIEW_CLASS_AS_ADMIN);
                     manager.updateMenuBarState();
@@ -85,7 +87,7 @@ public class ClassPage {
         }
         return mainPane;
     }
-    public void createaddUserPane(String currentSelectedClass){
+    public VBox createaddUserPane(String currentSelectedClass){
         VBox addUserPane = new VBox();
         GridPane fields = new GridPane();
 
@@ -106,12 +108,14 @@ public class ClassPage {
         submitButton.setOnAction(event -> {
             User user = manager.getController().searchForUser(userNameTextField.getText());
             if(user != null){
-                manager.getController().addUserToClass(user, currentClassSelected);
+                manager.getController().addUserToClass(user, currentSelectedClass);
             }
             else {
                 System.out.println("That user does not exist");
             }
         });
+
+        return addUserPane;
     }
     public void clearPage(){
         this.mainPane.getChildren().clear();

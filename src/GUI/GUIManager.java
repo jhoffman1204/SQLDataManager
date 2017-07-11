@@ -37,7 +37,7 @@ public class GUIManager extends Application {
     HBox menuBar;
     HBox mainPage = new HBox();
     VBox pageSpeicificOptionBar;
-    Node[] menuButtons = new Node[9];
+    Node[] menuButtons = new Node[10];
     String currentUser;
     String currentViewingUser;
     String selectedClass;

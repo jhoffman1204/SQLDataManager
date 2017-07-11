@@ -14,14 +14,17 @@ public class FiniteStateMachine {
      * 5. Send Collab Request
      * 6. View Messages
      * 7. View Classes
+     * 8. Add User
+     * 9. My Profile
      * @return
      */
-     ////                                              012345678
-    public static final String LOGGED_OUT_STATE     = "101000000";
-    public static final String LOGGED_IN_STATE      = "010110110";
-    public static final String VIEW_USER_STATE      = "010112110";
-    public static final String VIEW_CLASS_AS_ADMIN  = "010110112";
-    public static final String VIEW_CLASS_AS_USER   = "010110110";
+     ////                                                0123456789
+    public static final String LOGGED_OUT_STATE       = "1010000000";
+    public static final String LOGGED_IN_STATE        = "0101101101";
+    public static final String VIEW_USER_STATE        = "0101121101";
+    public static final String VIEW_OWN_PROFILE_STATE = "0101121101";
+    public static final String VIEW_CLASS_AS_ADMIN    = "0101101121";
+    public static final String VIEW_CLASS_AS_USER     = "0101101101";
     private String currentState;
     public void init(){
 

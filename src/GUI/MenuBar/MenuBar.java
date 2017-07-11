@@ -1,6 +1,7 @@
 package GUI.MenuBar;
 
 import Data.DataObjects.ClassInformation;
+import Data.DataObjects.User;
 import FSM.FiniteStateMachine;
 import GUI.ClassGUI.*;
 import GUI.GUIManager;
@@ -22,6 +23,8 @@ import Controller.Controller;
  * 5. Send Collab Request
  * 6. View Messages
  * 7. View Classes
+ * 8. Add User to Class
+ * 9. View My Profile
  * @
  */
 
@@ -32,7 +35,7 @@ public class MenuBar {
     Node[] menuButtons;
 
     public void init(Controller controller, GUIManager guiManager){
-        this.menuButtons = new Node[9];
+        this.menuButtons = new Node[10];
         this.guiManager = guiManager;
         this.controller = controller;
     }
@@ -97,11 +100,18 @@ public class MenuBar {
         Button addUser = new Button("Add User to Class");
         addUser.setOnAction(event -> {
             ClassPage classPage = new ClassPage(guiManager,controller);
-            classPage.clearPage();
-            classPage.createaddUserPane(guiManager.getSelectedClass());
+            guiManager.setAsBodyPane(classPage.createaddUserPane(guiManager.getSelectedClass()));
         });
         menuButtons[8] = addUser;
 
+        Button myProfileButton = new Button("My Profile");
+        myProfileButton.setOnAction(event -> {
+            UserPage userPage = new UserPage(guiManager);
+            User user = controller.getCurrentUser();
+            guiManager.setAsBodyPane(userPage.generateUserPage(user,true));
+        });
+
+        menuButtons[9] = myProfileButton;
 
         return menuButtons;
     }

@@ -23,13 +23,15 @@ public class UserPage {
     public UserPage(GUIManager manager){
         this.guimanager = manager;
     }
-    public HBox generateUserPage(User user){
-
+    public HBox generateUserPage(User user, boolean isCurrentUser){
+        if(isCurrentUser){
+            guimanager.setCurrentViewingUser(guimanager.getCurrentUser());
+        }
         VBox leftColumn = new VBox();
         VBox userInformationPane = new VBox();
         HBox userPage = new HBox();
         VBox microPostPane = createMicroPostPane();
-        VBox bioPane = this.createBioPane();
+        VBox bioPane = this.createBioPane(isCurrentUser);
         ScrollPane microposts = createMicroPostDisplayPane();
 
         Label userNameLabel = new Label(user.getUsername());
@@ -55,7 +57,9 @@ public class UserPage {
 
         leftColumn.getChildren().add(userInformationPane);
         leftColumn.getChildren().add(bioPane);
-        leftColumn.getChildren().add(microPostPane);
+        if(isCurrentUser) {
+            leftColumn.getChildren().add(microPostPane);
+        }
 
         leftColumn.setMargin(microPostPane , new Insets(20,0,15,0));
 
@@ -104,7 +108,7 @@ public class UserPage {
             System.out.println(micropost.getUser());
 
             guimanager.getController().postMicroPost(micropost);
-            guimanager.setAsBodyPane(generateUserPage(guimanager.getController().getCurrentUser()));
+            guimanager.setAsBodyPane(generateUserPage(guimanager.getController().getCurrentUser(),true));
         });
 
         return box;
@@ -142,7 +146,7 @@ public class UserPage {
 
         return postsPane;
     }
-    public VBox createBioPane(){
+    public VBox createBioPane(boolean isCurrentUser){
         VBox box = new VBox();
 
         Label label = new Label("Bio");
@@ -156,7 +160,9 @@ public class UserPage {
         bioPane.getChildren().add(bio);
         box.getChildren().add(label);
         box.getChildren().add(bioPane);
-        box.getChildren().add(button);
+        if(isCurrentUser) {
+            box.getChildren().add(button);
+        }
 
         button.setOnAction(event -> {
             bioPane.getChildren().clear();
