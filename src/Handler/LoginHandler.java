@@ -20,8 +20,8 @@ public class LoginHandler extends EventHandler{
         return super.getGuiManager();
     }
     public void handle(String username){
-        guiManager.setCurrentViewingUser(username);
-        guiManager.setCurrentUser(username);
+        guiManager.getController().getUserStateManager().setCurrentViewingUser(username);
+        guiManager.getController().getUserStateManager().setCurrentUser(username);
         controller.setCurrentUser(controller.retrieveUser(username));
         controller.getFsm().setState(FiniteStateMachine.LOGGED_IN_STATE);
         guiManager.updateMenuBarState();

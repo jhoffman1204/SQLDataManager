@@ -25,7 +25,7 @@ public class UserPage {
     }
     public HBox generateUserPage(User user, boolean isCurrentUser){
         if(isCurrentUser){
-            guimanager.setCurrentViewingUser(guimanager.getCurrentUser());
+            guimanager.getController().getUserStateManager().setCurrentViewingUser(guimanager.getController().getUserStateManager().getCurrentUser());
         }
         VBox leftColumn = new VBox();
         VBox userInformationPane = new VBox();
@@ -100,7 +100,7 @@ public class UserPage {
             Micropost micropost = new Micropost();
             String titleData = title.getText();
             String postData = post.getText();
-            String userData = guimanager.getCurrentUser();
+            String userData = guimanager.getController().getUserStateManager().getCurrentUser();
 
             micropost.setTitle(titleData);
             micropost.setPost(postData);
@@ -130,7 +130,7 @@ public class UserPage {
         VBox pane = new VBox();
 
         //Micropost[] a = guimanager.getController().retrievePosts(guimanager.getCurrentViewingUser());
-        Micropost[] a = guimanager.getController().retrievePosts(guimanager.getCurrentViewingUser());
+        Micropost[] a = guimanager.getController().retrievePosts(guimanager.getController().getUserStateManager().getCurrentViewingUser());
         //fSystem.out.println(guimanager.getCurrentViewingUser());
         for(int i = 0; i < a.length; i++){
             if(a[i]!= null) {

@@ -14,7 +14,8 @@ public class SendMessagePane {
 
     public static VBox createSendCollabRequestPane(Controller controller, GUIManager guiManager){
         VBox pane = new VBox();
-        Label viewUserLabel = new Label("Sending Message to: " + guiManager.getCurrentViewingUser());
+        Label viewUserLabel = new Label("Sending Message to: " +
+                guiManager.getController().getUserStateManager().getCurrentViewingUser());
         TextField subjectField = new TextField();
         Label subject = new Label("Subject: ");
         Label message = new Label("Message: ");
@@ -32,8 +33,8 @@ public class SendMessagePane {
 
         Button submit = new Button("Send");
         submit.setOnAction(event -> {
-            controller.sendMessage(guiManager.getCurrentViewingUser(), subjectField.getText(), bodyField.getText());
-            System.out.println("current viewing user " + guiManager.getCurrentViewingUser());
+            controller.sendMessage(guiManager.getController().getUserStateManager().getCurrentViewingUser(), subjectField.getText(), bodyField.getText());
+            System.out.println("current viewing user " + guiManager.getController().getUserStateManager().getCurrentViewingUser());
             subjectField.clear();
             bodyField.clear();
             viewUserLabel.setText("Message Sent!");

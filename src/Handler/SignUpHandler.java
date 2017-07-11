@@ -28,8 +28,8 @@ public class SignUpHandler extends EventHandler {
         else{
             return false;
         }
-        guiManager.setCurrentViewingUser(user.getUsername());
-        guiManager.setCurrentUser(user.getUsername());
+        guiManager.getController().getUserStateManager().setCurrentViewingUser(user.getUsername());
+        guiManager.getController().getUserStateManager().setCurrentUser(user.getUsername());
         UserPage userPage = new UserPage(guiManager);
         guiManager.setAsBodyPane(userPage.generateUserPage(controller.getCurrentUser(),true));
         controller.setCurrentUser(controller.retrieveUser(user.getUsername()));

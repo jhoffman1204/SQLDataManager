@@ -3,6 +3,7 @@ package Controller;
 import Data.DataObjects.*;
 import Data.DatabaseManagers.*;
 import FSM.FiniteStateMachine;
+import FSM.UserStateManager;
 import GUI.GUIManager;
 
 import java.security.MessageDigest;
@@ -21,6 +22,8 @@ public class Controller {
     FiniteStateMachine fsm;
     GUIManager guiManager;
     User currentUser;
+    UserStateManager userStateManager;
+
 
     /**
      * This class is initialized by the GUI.GUIManager and the main instance will be accessed from there
@@ -31,6 +34,7 @@ public class Controller {
         classInformationManager = new ClassInformationManager();
         messageManager = new MessageManager();
         micropostManager = new MicropostManager();
+        userStateManager = new UserStateManager();
         fsm = new FiniteStateMachine();
         fsm.init();
         this.guiManager = guiManager;
@@ -218,5 +222,11 @@ public class Controller {
     public void setState(String state)
     {
         fsm.setState(state);
+    }
+    public UserStateManager getUserStateManager() {
+        return userStateManager;
+    }
+    public void setUserStateManager(UserStateManager userStateManager) {
+        this.userStateManager = userStateManager;
     }
 }

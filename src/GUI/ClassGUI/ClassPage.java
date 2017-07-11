@@ -57,7 +57,7 @@ public class ClassPage {
                 button.setOnAction(event -> {
                     mainPane.getChildren().clear();
                     currentClassSelected = temp.getClass_name();
-                    manager.setSelectedClass(temp.getClass_name());
+                    manager.getController().getUserStateManager().setSelectedClass(temp.getClass_name());
                     manager.getController().setState(FiniteStateMachine.VIEW_CLASS_AS_ADMIN);
                     mainPane.getChildren().add(CoursePage.createClassPage(temp,manager));
                     ViewClassHandler handler = new ViewClassHandler(manager,controller);
@@ -78,7 +78,7 @@ public class ClassPage {
                 button.setOnAction(event -> {
                     mainPane.getChildren().clear();
                     currentClassSelected = temp.getClass_name();
-                    manager.setSelectedClass(temp.getClass_name());
+                    manager.getController().getUserStateManager().setSelectedClass(temp.getClass_name());
                     mainPane.getChildren().add(CoursePage.createClassPage(temp,manager));
                     manager.getController().setState(FiniteStateMachine.VIEW_CLASS_AS_ADMIN);
                     manager.updateMenuBarState();

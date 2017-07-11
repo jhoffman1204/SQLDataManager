@@ -29,7 +29,7 @@ public class SearchBar {
             User temp = controller.searchForUser(searchField.getText());
             if(temp != null){
                 controller.getFsm().setState(FiniteStateMachine.VIEW_USER_STATE);
-                guiManager.setCurrentViewingUser(temp.getUsername());
+                guiManager.getController().getUserStateManager().setCurrentViewingUser(temp.getUsername());
                 UserPage userPage = new UserPage(guiManager);
                 guiManager.setAsBodyPane(userPage.generateUserPage(temp,false));
                 guiManager.updateMenuBarState();

@@ -6,6 +6,7 @@ import Data.DataObjects.ClassInformation;
 import Data.DataObjects.Message;
 import Data.DataObjects.User;
 import FSM.FiniteStateMachine;
+import FSM.UserStateManager;
 import GUI.ClassGUI.ClassPage;
 import GUI.ClassGUI.HomePage;
 import GUI.ClassGUI.UserPage;
@@ -38,9 +39,9 @@ public class GUIManager extends Application {
     HBox mainPage = new HBox();
     VBox pageSpeicificOptionBar;
     Node[] menuButtons = new Node[10];
-    String currentUser;
-    String currentViewingUser;
-    String selectedClass;
+    //String currentUser;
+    //String currentViewingUser;
+    //String selectedClass;
 
     ClassPage classPage;
     UserPage userPage;
@@ -125,27 +126,23 @@ public class GUIManager extends Application {
         currenBodyPane = pane;
     }
 
-    /**
-     * Getter and Setter methods
-     * @param selectedClass
-     */
-
-    public void setSelectedClass(String selectedClass){
-        this.selectedClass = selectedClass;
-    }
     public void setController(Controller controller){
         this.controller = controller;
     }
     public Controller getController(){
         return this.controller;
     }
-    public String getSelectedClass(){ return this.selectedClass; }
-    public String getCurrentUser(){ return this.currentUser; }
-    public void setCurrentUser(String currentUser){ this.currentUser = currentUser; }
-    public String getCurrentViewingUser() {
-        return currentViewingUser;
-    }
-    public void setCurrentViewingUser(String currentViewingUser) {
-        this.currentViewingUser = currentViewingUser;
-    }
+
+//    public String getSelectedClass(){ return this.selectedClass; }
+//    public String getCurrentUser(){ return this.currentUser; }
+//    public void setCurrentUser(String currentUser){ this.currentUser = currentUser; }
+//    public String getCurrentViewingUser() {
+//        return currentViewingUser;
+//    }
+//    public void setSelectedClass(String selectedClass){
+//        this.selectedClass = selectedClass;
+//    }
+//    public void setCurrentViewingUser(String currentViewingUser) {
+//        this.currentViewingUser = currentViewingUser;
+//    }
 }

@@ -89,8 +89,8 @@ public class MenuBar {
 
         Button viewClasses = new Button("View Classes");
         viewClasses.setOnAction(event -> {
-            ClassInformation[] classes = controller.retrieveClasses(guiManager.getCurrentUser());
-            ClassInformation[] participantClasses = controller.retrieveCoursesTakenByStudent(guiManager.getCurrentUser());
+            ClassInformation[] classes = controller.retrieveClasses(guiManager.getController().getUserStateManager().getCurrentUser());
+            ClassInformation[] participantClasses = controller.retrieveCoursesTakenByStudent(guiManager.getController().getUserStateManager().getCurrentUser());
             ClassPage classPage = new ClassPage(guiManager,controller);
             guiManager.setAsBodyPane(classPage.createClassesPane(controller.getCurrentUser().getUsername(), classes, participantClasses));
 
@@ -100,7 +100,7 @@ public class MenuBar {
         Button addUser = new Button("Add User to Class");
         addUser.setOnAction(event -> {
             ClassPage classPage = new ClassPage(guiManager,controller);
-            guiManager.setAsBodyPane(classPage.createaddUserPane(guiManager.getSelectedClass()));
+            guiManager.setAsBodyPane(classPage.createaddUserPane(guiManager.getController().getUserStateManager().getSelectedClass()));
         });
         menuButtons[8] = addUser;
 
