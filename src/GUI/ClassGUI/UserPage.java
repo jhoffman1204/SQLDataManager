@@ -155,30 +155,32 @@ public class UserPage {
         bioPane.setPrefSize(500,200);
         bioPane.setMaxWidth(300);
         bioPane.setStyle("-fx-border-style: solid;");
-        Button button = new Button("Edit Bio");
+        Button editBioButton = new Button("Edit Bio");
+        Button editInfoButton = new Button("Edit User Info");
 
         bioPane.getChildren().add(bio);
         box.getChildren().add(label);
         box.getChildren().add(bioPane);
         if(isCurrentUser) {
-            box.getChildren().add(button);
+            box.getChildren().add(editBioButton);
+            box.getChildren().add(editInfoButton);
         }
 
-        button.setOnAction(event -> {
+        editBioButton.setOnAction(event -> {
             bioPane.getChildren().clear();
             TextArea area = new TextArea();
             area.setPrefSize(500,200);
             area.setMaxWidth(300);
             bioPane.getChildren().add(area);
             Button submitNewBio = new Button("Submit New Bio");
-            box.getChildren().remove(button);
+            box.getChildren().remove(editBioButton);
             box.getChildren().add(submitNewBio);
             submitNewBio.setOnAction(event1 -> {
                 Label newBio = new Label(area.getText());
                 bioPane.getChildren().clear();
                 bioPane.getChildren().add(newBio);
                 box.getChildren().remove(submitNewBio);
-                box.getChildren().add(button);
+                box.getChildren().add(editBioButton);
             });
 
         });

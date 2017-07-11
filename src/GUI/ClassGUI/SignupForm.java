@@ -103,6 +103,7 @@ public class SignupForm {
                     emailTextField.getText());
             firstNameTextField.clear();
             lastNameTextField.clear();
+            usernameTextField.clear();
             passwordTextField.clear();
             majorTextField.clear();
             yearTextField.clear();

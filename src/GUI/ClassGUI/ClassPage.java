@@ -58,8 +58,8 @@ public class ClassPage {
                     mainPane.getChildren().clear();
                     currentClassSelected = temp.getClass_name();
                     manager.setSelectedClass(temp.getClass_name());
+                    manager.getController().setState(FiniteStateMachine.VIEW_CLASS_AS_ADMIN);
                     mainPane.getChildren().add(CoursePage.createClassPage(temp,manager));
-
                     ViewClassHandler handler = new ViewClassHandler(manager,controller);
                     handler.handle();
                 });

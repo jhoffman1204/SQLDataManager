@@ -3,6 +3,7 @@ package Handler;
 import Controller.Controller;
 import Data.DataObjects.User;
 import FSM.FiniteStateMachine;
+import GUI.ClassGUI.UserPage;
 import GUI.GUIManager;
 
 /**
@@ -29,6 +30,8 @@ public class SignUpHandler extends EventHandler {
         }
         guiManager.setCurrentViewingUser(user.getUsername());
         guiManager.setCurrentUser(user.getUsername());
+        UserPage userPage = new UserPage(guiManager);
+        guiManager.setAsBodyPane(userPage.generateUserPage(controller.getCurrentUser(),true));
         controller.setCurrentUser(controller.retrieveUser(user.getUsername()));
         controller.getFsm().setState(FiniteStateMachine.LOGGED_IN_STATE);
         guiManager.updateMenuBarState();
