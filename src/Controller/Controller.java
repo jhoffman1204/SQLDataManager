@@ -1,10 +1,10 @@
 package Controller;
 
-import Data.DataObjects.*;
-import Data.DatabaseManagers.*;
+import ModelData.DataObjects.*;
+import ModelData.DatabaseManagers.*;
 import FSM.FiniteStateMachine;
 import FSM.UserStateManager;
-import GUI.GUIManager;
+import View.GUIManager;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -26,7 +26,7 @@ public class Controller {
 
 
     /**
-     * This class is initialized by the GUI.GUIManager and the main instance will be accessed from there
+     * This class is initialized by the View.GUIManager and the main instance will be accessed from there
      */
     public void init(GUIManager guiManager){
         userManager = new UserDataManager();
@@ -40,7 +40,7 @@ public class Controller {
         this.guiManager = guiManager;
 
 //        messageManager.init();
-//        Data.DataObjects.Message[] messages = this.retrieveMessages("dcooper123");
+//        ModelData.DataObjects.Message[] messages = this.retrieveMessages("dcooper123");
     }
     public void addUser(User user){
         userManager.init();
@@ -59,7 +59,9 @@ public class Controller {
         classInformationManager.addData(classInformation);
         classInformationManager.closeConnection();
     }
+    public void changeBio(String newBio){
 
+    }
     public void addUserToClass(User user, String course){
         classParticipantManager.init();
                 ClassParticipant participant = new ClassParticipant(course,

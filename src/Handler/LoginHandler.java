@@ -2,7 +2,7 @@ package Handler;
 
 import Controller.Controller;
 import FSM.FiniteStateMachine;
-import GUI.GUIManager;
+import View.GUIManager;
 
 /**
  * Created by James Hoffman on 7/6/2017.

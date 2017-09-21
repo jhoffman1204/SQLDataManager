@@ -1,5 +1,5 @@
 package Handler;
-import GUI.GUIManager;
+import View.GUIManager;
 import Controller.Controller;
 /**
  * Created by James Hoffman on 7/6/2017.

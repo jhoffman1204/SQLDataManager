@@ -1,15 +1,8 @@
 package Handler.MenuButtons;
 
 import Controller.Controller;
-import Data.DataObjects.User;
-import GUI.GUIManager;
+import View.GUIManager;
 import Handler.EventHandler;
-import Handler.SignUpHandler;
-import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 
 /**
  * Created by James Hoffman on 7/7/2017.

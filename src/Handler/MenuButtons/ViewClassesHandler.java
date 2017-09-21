@@ -1,7 +1,7 @@
 package Handler.MenuButtons;
 
 import Controller.Controller;
-import GUI.GUIManager;
+import View.GUIManager;
 import Handler.EventHandler;
 
 /**

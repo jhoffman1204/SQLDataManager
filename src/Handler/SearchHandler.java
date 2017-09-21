@@ -1,8 +1,7 @@
 package Handler;
 
 import Controller.Controller;
-import GUI.GUIManager;
-import Handler.EventHandler;
+import View.GUIManager;
 
 /**
  * Created by James Hoffman on 7/7/2017.

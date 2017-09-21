@@ -1,10 +1,10 @@
 package Handler;
 
 import Controller.Controller;
-import Data.DataObjects.User;
+import ModelData.DataObjects.User;
 import FSM.FiniteStateMachine;
-import GUI.ClassGUI.UserPage;
-import GUI.GUIManager;
+import View.ClassGUI.UserPage;
+import View.GUIManager;
 
 /**
  * Created by James Hoffman on 7/6/2017.

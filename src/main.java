@@ -1,4 +1,4 @@
-import GUI.GUIManager;
+import View.GUIManager;
 import javafx.application.Application;
 
 /**
