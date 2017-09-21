@@ -146,7 +146,7 @@ public class UserPage {
 
         Label label = new Label("Bio");
         HBox bioPane = new HBox();
-        Label bio = new Label("This is a test bio");
+        Label bio = new Label(guimanager.getController().getCurrentUser().getBio());
         bioPane.setPrefSize(500,200);
         bioPane.setMaxWidth(300);
         bioPane.setStyle("-fx-border-style: solid;");

@@ -7,85 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="704706f0-6512-4e81-a32a-50d7ca5e542d" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/Data/DataManager.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/Data/DataObjects/ClassInformation.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/Data/DataObjects/ClassParticipant.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/Data/DataObjects/Message.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/Data/DataObjects/Micropost.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/Data/DataObjects/User.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/Data/DatabaseManagers/ClassInformationManager.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/Data/DatabaseManagers/ClassParticipantManager.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/Data/DatabaseManagers/MessageManager.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/Data/DatabaseManagers/MicropostManager.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/Data/DatabaseManagers/UserDataManager.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/GUI/ClassGUI/ClassPage.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/GUI/ClassGUI/CoursePage.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/GUI/ClassGUI/CreateClassPage.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/GUI/ClassGUI/HomePage.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/GUI/ClassGUI/HomeScreen.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/GUI/ClassGUI/LoginForm.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/GUI/ClassGUI/MessagesPane.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/GUI/ClassGUI/SearchBar.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/GUI/ClassGUI/SendMessagePane.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/GUI/ClassGUI/SignupForm.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/GUI/ClassGUI/UserPage.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/GUI/GUIManager.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/GUI/MenuBar/MenuBar.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/GUI/MenuBar/PageSpecificMenuBar.class" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Data/DataManager.java" afterPath="$PROJECT_DIR$/src/ModelData/DataManager.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Data/DataObjects/ClassInformation.java" afterPath="$PROJECT_DIR$/src/ModelData/DataObjects/ClassInformation.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Data/DataObjects/ClassParticipant.java" afterPath="$PROJECT_DIR$/src/ModelData/DataObjects/ClassParticipant.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Data/DataObjects/Message.java" afterPath="$PROJECT_DIR$/src/ModelData/DataObjects/Message.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Data/DataObjects/Micropost.java" afterPath="$PROJECT_DIR$/src/ModelData/DataObjects/Micropost.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Data/DataObjects/User.java" afterPath="$PROJECT_DIR$/src/ModelData/DataObjects/User.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Data/DatabaseManagers/ClassInformationManager.java" afterPath="$PROJECT_DIR$/src/ModelData/DatabaseManagers/ClassInformationManager.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Data/DatabaseManagers/ClassParticipantManager.java" afterPath="$PROJECT_DIR$/src/ModelData/DatabaseManagers/ClassParticipantManager.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Data/DatabaseManagers/MessageManager.java" afterPath="$PROJECT_DIR$/src/ModelData/DatabaseManagers/MessageManager.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Data/DatabaseManagers/MicropostManager.java" afterPath="$PROJECT_DIR$/src/ModelData/DatabaseManagers/MicropostManager.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Data/DatabaseManagers/UserDataManager.java" afterPath="$PROJECT_DIR$/src/ModelData/DatabaseManagers/UserDataManager.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/GUI/ClassGUI/ClassPage.java" afterPath="$PROJECT_DIR$/src/View/ClassGUI/ClassPage.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/GUI/ClassGUI/CoursePage.java" afterPath="$PROJECT_DIR$/src/View/ClassGUI/CoursePage.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/GUI/ClassGUI/CreateClassPage.java" afterPath="$PROJECT_DIR$/src/View/ClassGUI/CreateClassPage.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/GUI/ClassGUI/HomePage.java" afterPath="$PROJECT_DIR$/src/View/ClassGUI/HomePage.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/GUI/ClassGUI/HomeScreen.java" afterPath="$PROJECT_DIR$/src/View/ClassGUI/HomeScreen.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/GUI/ClassGUI/LoginForm.java" afterPath="$PROJECT_DIR$/src/View/ClassGUI/LoginForm.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/GUI/ClassGUI/MessagesPane.java" afterPath="$PROJECT_DIR$/src/View/ClassGUI/MessagesPane.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/GUI/ClassGUI/SearchBar.java" afterPath="$PROJECT_DIR$/src/View/ClassGUI/SearchBar.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/GUI/ClassGUI/SendMessagePane.java" afterPath="$PROJECT_DIR$/src/View/ClassGUI/SendMessagePane.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/GUI/ClassGUI/SignupForm.java" afterPath="$PROJECT_DIR$/src/View/ClassGUI/SignupForm.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/GUI/ClassGUI/UserPage.java" afterPath="$PROJECT_DIR$/src/View/ClassGUI/UserPage.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/GUI/GUIManager.java" afterPath="$PROJECT_DIR$/src/View/GUIManager.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/GUI/MenuBar/MenuBar.java" afterPath="$PROJECT_DIR$/src/View/MenuBar/MenuBar.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/GUI/MenuBar/PageSpecificMenuBar.java" afterPath="$PROJECT_DIR$/src/View/MenuBar/PageSpecificMenuBar.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/Controller/Controller.class" afterPath="$PROJECT_DIR$/out/production/SQLDataManager/Controller/Controller.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/Handler/EventHandler.class" afterPath="$PROJECT_DIR$/out/production/SQLDataManager/Handler/EventHandler.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/Handler/LoginHandler.class" afterPath="$PROJECT_DIR$/out/production/SQLDataManager/Handler/LoginHandler.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/Handler/LogoutHandler.class" afterPath="$PROJECT_DIR$/out/production/SQLDataManager/Handler/LogoutHandler.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/Handler/MenuButtons/CreateClassHandler.class" afterPath="$PROJECT_DIR$/out/production/SQLDataManager/Handler/MenuButtons/CreateClassHandler.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/Handler/MenuButtons/CreateCollabHandler.class" afterPath="$PROJECT_DIR$/out/production/SQLDataManager/Handler/MenuButtons/CreateCollabHandler.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/Handler/MenuButtons/CreateLoginHandler.class" afterPath="$PROJECT_DIR$/out/production/SQLDataManager/Handler/MenuButtons/CreateLoginHandler.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/Handler/MenuButtons/CreateSignInHandler.class" afterPath="$PROJECT_DIR$/out/production/SQLDataManager/Handler/MenuButtons/CreateSignInHandler.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/Handler/MenuButtons/ViewClassesHandler.class" afterPath="$PROJECT_DIR$/out/production/SQLDataManager/Handler/MenuButtons/ViewClassesHandler.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/Handler/MenuButtons/ViewMessageHandler.class" afterPath="$PROJECT_DIR$/out/production/SQLDataManager/Handler/MenuButtons/ViewMessageHandler.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/Handler/SearchHandler.class" afterPath="$PROJECT_DIR$/out/production/SQLDataManager/Handler/SearchHandler.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/Handler/SignUpHandler.class" afterPath="$PROJECT_DIR$/out/production/SQLDataManager/Handler/SignUpHandler.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/Handler/ViewClassHandler.class" afterPath="$PROJECT_DIR$/out/production/SQLDataManager/Handler/ViewClassHandler.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SQLDataManager/main.class" afterPath="$PROJECT_DIR$/out/production/SQLDataManager/main.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Controller/Controller.java" afterPath="$PROJECT_DIR$/src/Controller/Controller.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Handler/EventHandler.java" afterPath="$PROJECT_DIR$/src/Handler/EventHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Handler/LoginHandler.java" afterPath="$PROJECT_DIR$/src/Handler/LoginHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Handler/LogoutHandler.java" afterPath="$PROJECT_DIR$/src/Handler/LogoutHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Handler/MenuButtons/CreateClassHandler.java" afterPath="$PROJECT_DIR$/src/Handler/MenuButtons/CreateClassHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Handler/MenuButtons/CreateCollabHandler.java" afterPath="$PROJECT_DIR$/src/Handler/MenuButtons/CreateCollabHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Handler/MenuButtons/CreateLoginHandler.java" afterPath="$PROJECT_DIR$/src/Handler/MenuButtons/CreateLoginHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Handler/MenuButtons/CreateSignInHandler.java" afterPath="$PROJECT_DIR$/src/Handler/MenuButtons/CreateSignInHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Handler/MenuButtons/ViewClassesHandler.java" afterPath="$PROJECT_DIR$/src/Handler/MenuButtons/ViewClassesHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Handler/MenuButtons/ViewMessageHandler.java" afterPath="$PROJECT_DIR$/src/Handler/MenuButtons/ViewMessageHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Handler/SearchHandler.java" afterPath="$PROJECT_DIR$/src/Handler/SearchHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Handler/SignUpHandler.java" afterPath="$PROJECT_DIR$/src/Handler/SignUpHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Handler/ViewClassHandler.java" afterPath="$PROJECT_DIR$/src/Handler/ViewClassHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main.java" afterPath="$PROJECT_DIR$/src/main.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/View/ClassGUI/UserPage.java" afterPath="$PROJECT_DIR$/src/View/ClassGUI/UserPage.java" />
     </list>
     <ignored path="SQLDataManager.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -116,7 +38,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LoginHandler.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="LoginHandler.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Handler/LoginHandler.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="273">
@@ -136,11 +58,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserPage.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="UserPage.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/View/ClassGUI/UserPage.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="144" column="30" lean-forward="true" selection-start-line="144" selection-start-column="30" selection-end-line="144" selection-end-column="30" />
+            <state relative-caret-position="178">
+              <caret line="148" column="82" lean-forward="false" selection-start-line="148" selection-start-column="82" selection-end-line="148" selection-end-column="82" />
               <folding />
             </state>
           </provider>
@@ -844,7 +766,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="7" />
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1331,14 +1254,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/View/ClassGUI/UserPage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="144" column="30" lean-forward="true" selection-start-line="144" selection-start-column="30" selection-end-line="144" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="254">
@@ -1362,6 +1277,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="273">
           <caret line="21" column="16" lean-forward="false" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/View/ClassGUI/UserPage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="148" column="82" lean-forward="false" selection-start-line="148" selection-start-column="82" selection-end-line="148" selection-end-column="82" />
           <folding />
         </state>
       </provider>
